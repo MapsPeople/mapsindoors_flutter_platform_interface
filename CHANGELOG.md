@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+* No change
+
 ## 2.1.0
 
 * Added `showRouteLegButtons` to `MPDirectionsRenderer`
