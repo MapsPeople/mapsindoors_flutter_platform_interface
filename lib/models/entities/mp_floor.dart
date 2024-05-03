@@ -3,7 +3,7 @@ part of 'package:mapsindoors_platform_interface/platform_library.dart';
 /// A unique identifier for floors
 @immutable
 class MPFloorId extends DynamicObjectId {
-  const MPFloorId(String value) : super(value);
+  const MPFloorId(super.value);
 }
 
 /// A MapsIndoors geographical entity. A [MPFloor] is contained within a [MPBuilding].

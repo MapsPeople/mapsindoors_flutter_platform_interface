@@ -55,7 +55,7 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   Future<bool?> isUserPositionShown();
   Future<void> enableLiveData(
       String domainType, OnLiveLocationUpdateListener? listener);
-  Future<void> disableLiveData(String donaminType);
+  Future<void> disableLiveData(String domainType);
   void addOnCameraEventListner(MPCameraEventListener listener);
   void removeOnCameraEventListner(MPCameraEventListener listener);
   void addOnFloorUpdateListener(OnFloorUpdateListener listener);

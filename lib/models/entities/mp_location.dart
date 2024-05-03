@@ -3,12 +3,13 @@ part of 'package:mapsindoors_platform_interface/platform_library.dart';
 /// A unique identifier for locations
 @immutable
 class MPLocationId extends DynamicObjectId {
-  const MPLocationId(String value) : super(value);
+  const MPLocationId(super.value);
 }
 
 /// A MapsIndoors geographical entity. A [MPLocation] can exist anywhere,
 /// but it is usually only used inside [MPVenue]s and [MPBuilding]s.
 class MPLocation extends MPEntity<MPLocationId> {
+  @override
   final MPLocationId id;
   final MPGeometry? _geometry;
   final List<String>? _restrictions;
@@ -33,9 +34,9 @@ class MPLocation extends MPEntity<MPLocationId> {
 
   static MPLocation _fromJson(data) {
     final id = MPLocationId(data["id"]);
-    var geometry;
+    dynamic geometry;
     if (data["geometry"] != null) {
-      final geo = data["geometry"];
+      final dynamic geo = data["geometry"];
 
       if (Platform.isIOS) {
         switch (data["geometryType"]) {
@@ -63,14 +64,14 @@ class MPLocation extends MPEntity<MPLocationId> {
         }
       }
     }
-    var point;
+    dynamic point;
     if (Platform.isIOS) {
       if (data["point"] != null) {
         point = MPPoint.fromJson(data["point"]);
       }
       //TODO: fix bounds not being available on iOS
     }
-    var restrictions;
+    dynamic restrictions;
     if (data["restrictions"] != null) {
       restrictions = convertJsonArray<String>(data["restrictions"]);
     }

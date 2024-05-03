@@ -10,17 +10,17 @@ class MPBuildingCollection extends MPCollection<MPBuilding> {
       : null;
 
   MPBuildingCollection._fromJson(data) : super._() {
-    _adminIdMap = new Map();
+    _adminIdMap = <String, MPBuilding>{};
     List<MPBuilding> buildings =
         convertMIList<MPBuilding>(data, (p0) => MPBuilding.fromJson(p0));
-    buildings.forEach((building) {
+    for (var building in buildings) {
       _map[building.id.value] = building;
       _adminIdMap[building.administrativeId] = building;
-    });
+    }
   }
 
   /// Fetch a building by its administrative [id]
   MPBuilding? getBuildingByAdminId(String id) {
-    return this._adminIdMap[id];
+    return _adminIdMap[id];
   }
 }

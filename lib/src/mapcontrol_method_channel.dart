@@ -24,7 +24,8 @@ class MethodChannelMapControl extends MapcontrolPlatform {
 
   OnMapReadyListener? onMapControlReady;
 
-  final Map<String, OnLiveLocationUpdateListener> _liveUpdateListeners = Map();
+  final Map<String, OnLiveLocationUpdateListener> _liveUpdateListeners =
+      <String, void Function(MPLocation)>{};
 
   MPFloorSelectorInterface? _floorSelector;
 

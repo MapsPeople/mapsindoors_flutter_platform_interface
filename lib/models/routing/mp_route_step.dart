@@ -87,7 +87,7 @@ class MPRouteStep extends MapsIndoorsObject {
         : MPRouteProperty.fromJson(data["duration"]);
     final startLocation = MPRouteCoordinate.fromJson(data["start_location"]);
     final endLocation = MPRouteCoordinate.fromJson(data["end_location"]);
-    var highway;
+    dynamic highway;
     if (data["highway"] is String) {
       highway = data["highway"];
     } else if (data["highway"] != null) {
@@ -97,12 +97,12 @@ class MPRouteStep extends MapsIndoorsObject {
     final htmlInstructions = data["html_instructions"];
     final maneuver = data["maneuver"];
     final travelMode = data["travel_mode"];
-    var availableTravelModes;
+    dynamic availableTravelModes;
     if (data["available_travel_modes"] != null) {
       availableTravelModes =
           convertJsonArray<String>(data["available_travel_modes"]);
     }
-    var steps;
+    dynamic steps;
     if (data["steps"] != null) {
       var jsonRouteSteps = convertJsonArray(data["steps"]);
       var routeSteps = List<MPRouteStep?>.generate(jsonRouteSteps.length,
@@ -111,7 +111,7 @@ class MPRouteStep extends MapsIndoorsObject {
       steps = routeSteps.cast<MPRouteStep>();
     }
 
-    var geometry;
+    dynamic geometry;
     if (data["geometry"] != null) {
       var jsonGeometry = convertJsonArray(data["geometry"]);
       var routeGeometry = List<MPRouteCoordinate?>.generate(jsonGeometry.length,
