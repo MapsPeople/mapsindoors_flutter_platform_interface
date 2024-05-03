@@ -3,12 +3,13 @@ part of 'package:mapsindoors_platform_interface/platform_library.dart';
 /// A unique identifier for venues
 @immutable
 class MPVenueId extends DynamicObjectId {
-  const MPVenueId(String value) : super(value);
+  const MPVenueId(super.value);
 }
 
 /// A MapsIndoors geographical entity. A [MPVenue] can exist anywhere,
 /// and it can contain a number of [MPBuilding]s and [MPLocation]s.
 class MPVenue extends MPEntity<MPVenueId> {
+  @override
   final MPVenueId id;
   final String? graphId;
   final String administrativeId;

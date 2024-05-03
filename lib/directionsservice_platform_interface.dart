@@ -22,7 +22,7 @@ abstract class DirectionsServicePlatform extends PlatformInterface {
 
   Future<void> setIsDeparture(bool isDeparture);
 
-  Future<MPRoute> getRoute(MPPoint originJson, MPPoint destinationJson);
+  Future<MPRoute> getRoute(MPPoint origin, MPPoint destination);
 
   Future<void> setTravelMode(String travelMode);
 

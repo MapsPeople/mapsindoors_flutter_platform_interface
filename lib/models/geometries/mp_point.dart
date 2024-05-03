@@ -38,10 +38,11 @@ class MPPoint extends MPGeometry {
   MPPoint._fromJson(data) {
     // iOS will send an array directly, so handle this case
     final List<num> coordinates;
-    if (data is List)
+    if (data is List) {
       coordinates = convertJsonArray<num>(data);
-    else
+    } else {
       coordinates = convertJsonArray<num>(data["coordinates"]);
+    }
 
     longitude = coordinates[0];
     latitude = coordinates[1];
@@ -116,8 +117,7 @@ class MPPoint extends MPGeometry {
   ///
   /// "15.00000001,20.20000014,10"
   String get coordinatesAsString {
-    return "${latitude.toStringAsPrecision(8)},${longitude.toStringAsPrecision(8)}" +
-        ((_floorIndex != null) ? ",$floorIndex" : "");
+    return "${latitude.toStringAsPrecision(8)},${longitude.toStringAsPrecision(8)}${(_floorIndex != null) ? ",$floorIndex" : ""}";
   }
 
   @override

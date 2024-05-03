@@ -10,6 +10,8 @@ class MPUserRoleCollection extends MPCollection<MPUserRole> {
   MPUserRoleCollection._fromJson(data) : super._() {
     List<MPUserRole> userroles =
         convertMIList<MPUserRole>(data, (p0) => MPUserRole.fromJson(p0));
-    userroles.forEach((role) => _map[role.id] = role);
+    for (var role in userroles) {
+      _map[role.id] = role;
+    }
   }
 }

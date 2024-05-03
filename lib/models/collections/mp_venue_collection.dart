@@ -10,17 +10,17 @@ class MPVenueCollection extends MPCollection<MPVenue> {
       : null;
 
   MPVenueCollection._fromJson(data) : super._() {
-    _adminIdMap = new Map();
+    _adminIdMap = <String, MPVenue>{};
     List<MPVenue> venues =
         convertMIList<MPVenue>(data, (p0) => MPVenue.fromJson(p0));
-    venues.forEach((venue) {
+    for (var venue in venues) {
       _map[venue.id.value] = venue;
       _adminIdMap[venue.administrativeId] = venue;
-    });
+    }
   }
 
   /// Fetch a venue by its administrative [id]
   MPVenue? getVenueByAdminId(String id) {
-    return this._adminIdMap[id];
+    return _adminIdMap[id];
   }
 }

@@ -10,16 +10,18 @@ class MPCategoryCollection extends MPCollection<MPCategory> {
   MPCategoryCollection._fromJson(data) : super._() {
     List<MPCategory> categories =
         convertMIList<MPCategory>(data, (p0) => MPCategory.fromJson(p0));
-    categories.forEach((category) => _map[category.key] = category);
+    for (var category in categories) {
+      _map[category.key] = category;
+    }
   }
 
   /// Fetch the [MPCategory.value] of a [MPCategory] directly from the collection
   String? getValue(String key) {
-    return this.getById(key)?.value;
+    return getById(key)?.value;
   }
 
   /// Fetch the [MPCategory.fields] of a [MPCategory] directly from the collection
   Map<String, MPDataField>? getFields(String key) {
-    return this.getById(key)?.fields;
+    return getById(key)?.fields;
   }
 }

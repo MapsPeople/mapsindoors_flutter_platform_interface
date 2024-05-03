@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'package:mapsindoors_platform_interface/platform_library.dart';
 
 /// Sets a behavior for the map when calling MapsIndoorsWidget.setFilter

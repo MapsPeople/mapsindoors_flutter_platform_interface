@@ -24,7 +24,7 @@ class MPCameraPosition extends MapsIndoorsObject {
     final tilt = data["tilt"];
     final bearing = data["bearing"];
     final target = MPPoint.fromJson(data["target"])!;
-    return new MPCameraPosition(
+    return MPCameraPosition(
         zoom: zoom, target: target, bearing: bearing, tilt: tilt);
   }
 

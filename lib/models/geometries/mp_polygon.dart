@@ -20,9 +20,9 @@ class MPPolygon extends MPGeometry {
 
   MPPolygon._fromJson(data) {
     // iOS will send an array directly, so handle this case
-    if (data is List)
+    if (data is List) {
       coordinates = convertJson3dArray<num>(data);
-    else {
+    } else {
       coordinates = convertJson3dArray<num>(data["coordinates"]);
       bbox = convertJsonArray<num>(data['bbox']);
     }

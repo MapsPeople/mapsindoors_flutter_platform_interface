@@ -48,8 +48,6 @@ class MPError {
 
   @override
   String toString() {
-    return "code: $code, message: \"$message\"" +
-        ((status != null) ? ", status: $status" : "") +
-        ((tag != null) ? ", tag: $tag" : "");
+    return "code: $code, message: \"$message\"${(status != null) ? ", status: $status" : ""}${(tag != null) ? ", tag: $tag" : ""}";
   }
 }

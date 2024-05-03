@@ -3,7 +3,7 @@ part of 'package:mapsindoors_platform_interface/platform_library.dart';
 /// A unique identifier for display rules
 @immutable
 class MPDisplayRuleId extends DynamicObjectId {
-  const MPDisplayRuleId(String value) : super(value);
+  const MPDisplayRuleId(super.value);
 }
 
 /// A collection of settings that dictate how MapsIndoors objects are displayed on the map

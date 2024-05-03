@@ -3,12 +3,13 @@ part of 'package:mapsindoors_platform_interface/platform_library.dart';
 /// A unique identifier for buildings
 @immutable
 class MPBuildingId extends DynamicObjectId {
-  const MPBuildingId(String value) : super(value);
+  const MPBuildingId(super.value);
 }
 
 /// A MapsIndoors geographical entity. A [MPBuilding] is contained within a [MPVenue]
 /// and contains a number of [MPFloor]s.
 class MPBuilding extends MPEntity<MPBuildingId> {
+  @override
   final MPBuildingId id;
   final String administrativeId;
   final String? externalId;

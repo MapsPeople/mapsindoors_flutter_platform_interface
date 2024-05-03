@@ -57,7 +57,7 @@ class MPRoute extends MapsIndoorsObject {
         list.length, (index) => MPRouteLeg.fromJson(list[index]));
     routeLegs.removeWhere((element) => element == null);
     final legs = routeLegs.cast<MPRouteLeg>();
-    var bounds;
+    dynamic bounds;
     if (data["bounds"] != null) {
       //TODO: fix bounds?
     }
