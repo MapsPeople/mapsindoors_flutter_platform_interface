@@ -44,6 +44,11 @@ part 'models/enums/mp_camera_event.dart';
 part 'models/enums/mp_camera_view_fit_mode.dart';
 part 'models/enums/live_data_domain_types.dart';
 part 'models/enums/mp_highway.dart';
+part 'models/enums/mp_feature_type.dart';
+part 'models/enums/mp_badge_position.dart';
+part 'models/enums/mp_label_type.dart';
+part 'models/enums/mp_icon_placement.dart';
+part 'models/enums/mp_venue_status.dart';
 
 part 'models/listeners/mp_camera_event_listener.dart';
 part 'models/listeners/on_building_found_at_camera_target_listener.dart';
@@ -59,6 +64,7 @@ part 'models/listeners/on_position_update_listener.dart';
 part 'models/listeners/on_leg_selected_listener.dart';
 part 'models/listeners/on_live_location_update_listener.dart';
 part 'models/listeners/on_map_ready_listener.dart';
+part 'models/listeners/mp_venue_status_listener.dart';
 
 part 'models/routing/mp_route.dart';
 part 'models/routing/mp_route_leg.dart';

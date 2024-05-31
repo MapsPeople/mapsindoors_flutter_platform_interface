@@ -64,6 +64,14 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   Future<void> setIconSize(MPIconSize size) =>
       DisplayRulePlatform.instance.setIconSize(id, size);
 
+  /// Get the icon's placement relative to the anchor point
+  Future<MPIconPlacement?> getIconPlacement() =>
+      DisplayRulePlatform.instance.getIconPlacement(id);
+
+  /// Set the icon's placement realtive to the anchor point
+  Future<void> setIconPlacement(MPIconPlacement placement) =>
+      DisplayRulePlatform.instance.setIconPlacement(id, placement);
+
   /// Get the label's visibility value
   Future<bool?> isLabelVisible() =>
       DisplayRulePlatform.instance.isLabelVisible(id);
@@ -78,6 +86,14 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   /// Set the label string
   Future<void> setLabel(String label) =>
       DisplayRulePlatform.instance.setLabel(id, label);
+
+  /// Get the label's type
+  Future<MPLabelType?> getLabelType() =>
+      DisplayRulePlatform.instance.getLabelType(id);
+
+  /// Set the label's type
+  Future<void> setLabelType(MPLabelType type) =>
+      DisplayRulePlatform.instance.setLabelType(id, type);
 
   /// Get the label's zoom from value
   Future<num?> getLabelZoomFrom() =>
@@ -102,6 +118,63 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   /// Set the label's max width value
   Future<void> setLabelMaxWidth(int max) =>
       DisplayRulePlatform.instance.setLabelMaxWidth(id, max);
+
+  // labelStyle
+  /// Get the labelStyle's text size
+  Future<num?> getLabelStyleTextSize() =>
+      DisplayRulePlatform.instance.getLabelStyleTextSize(id);
+
+  /// Set the labelStyle's text size
+  Future<void> setLabelStyleTextSize(num max) =>
+      DisplayRulePlatform.instance.setLabelStyleTextSize(id, max);
+
+  /// Get the labelStyle's text color
+  Future<String?> getLabelStyleTextColor() =>
+      DisplayRulePlatform.instance.getLabelStyleTextColor(id);
+
+  /// Set the labelStyle's text color
+  Future<void> setLabelStyleTextColor(String color) =>
+      DisplayRulePlatform.instance.setLabelStyleTextColor(id, color);
+
+  /// Get the labelStyle's text opacity
+  Future<num?> getLabelStyleTextOpacity() =>
+      DisplayRulePlatform.instance.getLabelStyleTextOpacity(id);
+
+  /// Set the labelStyle's text opacity
+  Future<void> setLabelStyleTextOpacity(num opacity) =>
+      DisplayRulePlatform.instance.setLabelStyleTextOpacity(id, opacity);
+
+  /// Get the labelStyle's halo color
+  Future<String?> getLabelStyleHaloColor() =>
+      DisplayRulePlatform.instance.getLabelStyleHaloColor(id);
+
+  /// Set the labelStyle's halo color
+  Future<void> setLabelStyleHaloColor(String color) =>
+      DisplayRulePlatform.instance.setLabelStyleHaloColor(id, color);
+
+  /// Get the labelStyle's halo width
+  Future<num?> getLabelStyleHaloWidth() =>
+      DisplayRulePlatform.instance.getLabelStyleHaloWidth(id);
+
+  /// Set the labelStyle's halo width
+  Future<void> setLabelStyleHaloWidth(num width) =>
+      DisplayRulePlatform.instance.setLabelStyleHaloWidth(id, width);
+
+  /// Get the labelStyle's halo blur
+  Future<num?> getLabelStyleHaloBlur() =>
+      DisplayRulePlatform.instance.getLabelStyleHaloBlur(id);
+
+  /// Set the labelStyle's halo blur
+  Future<void> setLabelStyleHaloBlur(num blur) =>
+      DisplayRulePlatform.instance.setLabelStyleHaloBlur(id, blur);
+
+  /// Get the labelStyle's bearing
+  Future<num?> getLabelStyleBearing() =>
+      DisplayRulePlatform.instance.getLabelStyleBearing(id);
+
+  /// Set the labelStyle's bearing
+  Future<void> setLabelStyleBearing(num bearing) =>
+      DisplayRulePlatform.instance.setLabelStyleBearing(id, bearing);
 
   // polygon
   /// Get the polygon's visibility value
@@ -168,6 +241,14 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   Future<void> setPolygonFillOpacity(num opacity) =>
       DisplayRulePlatform.instance.setPolygonFillOpacity(id, opacity);
 
+  /// Get the polygon's lightness factor
+  Future<num?> getPolygonLightnessFactor() =>
+      DisplayRulePlatform.instance.getPolygonLightnessFactor(id);
+
+  /// Set the polygon's lightness factor
+  Future<void> setPolygonLightnessFactor(num factor) =>
+      DisplayRulePlatform.instance.setPolygonLightnessFactor(id, factor);
+
   // wall
   /// Get the wall's visibility value
   Future<bool?> isWallVisible() =>
@@ -209,6 +290,14 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   Future<void> setWallZoomTo(num to) =>
       DisplayRulePlatform.instance.setWallZoomTo(id, to);
 
+  /// Get the wall's lightness factor
+  Future<num?> getWallLightnessFactor() =>
+      DisplayRulePlatform.instance.getWallLightnessFactor(id);
+
+  /// Set the wall's lightness factor
+  Future<void> setWallLightnessFactor(num factor) =>
+      DisplayRulePlatform.instance.setWallLightnessFactor(id, factor);
+
   //extrusion
   /// Get the extrusion's visibility value
   Future<bool?> isExtrusionVisible() =>
@@ -249,6 +338,14 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   /// Set the extrusion's zoom to value
   Future<void> setExtrusionZoomTo(num to) =>
       DisplayRulePlatform.instance.setExtrusionZoomTo(id, to);
+
+  /// Get the extrusion's lightness factor
+  Future<num?> getExtrusionLightnessFactor() =>
+      DisplayRulePlatform.instance.getExtrusionLightnessFactor(id);
+
+  /// Set the extrusion's lightness factor
+  Future<void> setExtrusionLightnessFactor(num factor) =>
+      DisplayRulePlatform.instance.setExtrusionLightnessFactor(id, factor);
 
   //2d models
   /// Get the 2D model's visibility value
@@ -306,6 +403,143 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   /// Get the 2D model's bearing value
   Future<void> setModel2DBearing(num bearing) =>
       DisplayRulePlatform.instance.setModel2DBearing(id, bearing);
+
+  /// Set the 3D model's visibility
+  Future<void> setModel3DVisible(bool visible) =>
+      DisplayRulePlatform.instance.setModel3DVisible(id, visible);
+
+  /// Get whether the 3D model is visible
+  Future<bool?> isModel3DVisible() =>
+      DisplayRulePlatform.instance.isModel3DVisible(id);
+
+  /// Set the 3D model's zoom from value
+  Future<void> setModel3DZoomFrom(num from) =>
+      DisplayRulePlatform.instance.setModel3DZoomFrom(id, from);
+
+  /// Get the 3D model's zoom from value
+  Future<num?> getModel3DZoomFrom() =>
+      DisplayRulePlatform.instance.getModel3DZoomFrom(id);
+
+  /// Set the 3D model's zoom to value
+  Future<void> setModel3DZoomTo(num to) =>
+      DisplayRulePlatform.instance.setModel3DZoomTo(id, to);
+
+  /// Get the 3D model's zoom to value
+  Future<num?> getModel3DZoomTo() =>
+      DisplayRulePlatform.instance.getModel3DZoomTo(id);
+
+  /// Set the 3D model's URI to a specific model, valid URI schemes are: https, file, asset
+  Future<void> setModel3DModel(String model) =>
+      DisplayRulePlatform.instance.setModel3DModel(id, model);
+
+  /// Get the 3D model's URI
+  Future<String?> getModel3DModel() =>
+      DisplayRulePlatform.instance.getModel3DModel(id);
+
+  /// Set the 3D model's rotation value on the X-axis in degrees
+  Future<void> setModel3DRotationX(num rotation) =>
+      DisplayRulePlatform.instance.setModel3DRotationX(id, rotation);
+
+  /// Get the 3D model's rotation value on the X-axis in degrees
+  Future<num?> getModel3DRotationX() =>
+      DisplayRulePlatform.instance.getModel3DRotationX(id);
+
+  /// Set the 3D model's rotation value on the Y-axis in degrees
+  Future<void> setModel3DRotationY(num rotation) =>
+      DisplayRulePlatform.instance.setModel3DRotationY(id, rotation);
+
+  /// Get the 3D model's rotation value on the Y-axis in degrees
+  Future<num?> getModel3DRotationY() =>
+      DisplayRulePlatform.instance.getModel3DRotationY(id);
+
+  /// Set the 3D model's rotation value on the Z-axis in degrees
+  Future<void> setModel3DRotationZ(num rotation) =>
+      DisplayRulePlatform.instance.setModel3DRotationZ(id, rotation);
+
+  /// Get the 3D model's rotation value on the Z-axis in degrees
+  Future<num?> getModel3DRotationZ() =>
+      DisplayRulePlatform.instance.getModel3DRotationZ(id);
+
+  /// Set the 3D model's scale
+  Future<void> setModel3DScale(num scale) =>
+      DisplayRulePlatform.instance.setModel3DScale(id, scale);
+
+  /// Get the 3D model's scale
+  Future<num?> getModel3DScale() =>
+      DisplayRulePlatform.instance.getModel3DScale(id);
+
+// badge
+  /// Get the badge's visibility
+  Future<bool?> isBadgeVisible() =>
+      DisplayRulePlatform.instance.isBadgeVisible(id);
+
+  /// Set the badge's visibility
+  Future<void> setBadgeVisible(bool visible) =>
+      DisplayRulePlatform.instance.setBadgeVisible(id, visible);
+
+  /// Get the badge's zoom from value
+  Future<num?> getBadgeZoomFrom() =>
+      DisplayRulePlatform.instance.getBadgeZoomFrom(id);
+
+  /// Set the badge's zoom from vale
+  Future<void> setBadgeZoomFrom(num from) =>
+      DisplayRulePlatform.instance.setBadgeZoomFrom(id, from);
+
+  /// Get the badge's zoom to value
+  Future<num?> getBadgeZoomTo() =>
+      DisplayRulePlatform.instance.getBadgeZoomTo(id);
+
+  /// Set the badge's zoom to value
+  Future<void> setBadgeZoomTo(num to) =>
+      DisplayRulePlatform.instance.setBadgeZoomTo(id, to);
+
+  /// Get the badge's stroke width
+  Future<num?> getBadgeStrokeWidth() =>
+      DisplayRulePlatform.instance.getBadgeStrokeWidth(id);
+
+  /// Set the badge's stroke width
+  Future<void> setBadgeStrokeWidth(num width) =>
+      DisplayRulePlatform.instance.setBadgeStrokeWidth(id, width);
+
+  /// Get the badge's stroke color
+  Future<String?> getBadgeStrokeColor() =>
+      DisplayRulePlatform.instance.getBadgeStrokeColor(id);
+
+  /// Set the badge's stroke color
+  Future<void> setBadgeStrokeColor(String color) =>
+      DisplayRulePlatform.instance.setBadgeStrokeColor(id, color);
+
+  /// Get the badge's fill color
+  Future<String?> getBadgeFillColor() =>
+      DisplayRulePlatform.instance.getBadgeFillColor(id);
+
+  /// Set the badge's fill color
+  Future<void> setBadgeFillColor(String color) =>
+      DisplayRulePlatform.instance.setBadgeFillColor(id, color);
+
+  /// Get the badge's scale
+  Future<num?> getBadgeScale() =>
+      DisplayRulePlatform.instance.getBadgeScale(id);
+
+  /// Set the badge's scale
+  Future<void> setBadgeScale(num scale) =>
+      DisplayRulePlatform.instance.setBadgeScale(id, scale);
+
+  /// Get the badge's radius
+  Future<num?> getBadgeRadius() =>
+      DisplayRulePlatform.instance.getBadgeRadius(id);
+
+  /// Set the badge's radius
+  Future<void> setBadgeRadius(num radius) =>
+      DisplayRulePlatform.instance.setBadgeRadius(id, radius);
+
+  /// Get the badge's visibility
+  Future<MPBadgePosition?> getBadgePosition() =>
+      DisplayRulePlatform.instance.getBadgePosition(id);
+
+  /// Set the badge's visibility
+  Future<void> setBadgePosition(MPBadgePosition position) =>
+      DisplayRulePlatform.instance.setBadgePosition(id, position);
 
   Future<void> reset() => DisplayRulePlatform.instance.reset(id);
 

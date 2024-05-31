@@ -23,7 +23,14 @@ abstract class MapsindoorsPlatform extends PlatformInterface {
 
   //region MapsIndoors
   Future<MPError?> load(String key);
+  Future<void> loadWithVenues(String key, List<String> venueIds);
   void addOnMapsIndoorsReadyListener(OnMapsIndoorsReadyListener listener);
+  void removeOnMapsIndoorsReadyListener(OnMapsIndoorsReadyListener listener);
+  Future<void> addVenuesToSync(List<String> venueIds);
+  Future<void> removeVenuesToSync(List<String> venueIds);
+  Future<List<String>> getSyncedVenues();
+  void addOnVenueStatusChangedListener(MPVenueStatusListener listener);
+  void removeOnVenueStatusChangedListener(MPVenueStatusListener listener);
   Future<bool?> checkOfflineDataAvailability();
   Future<void> destroy();
   Future<void> disableEventLogging(bool disable);
@@ -47,7 +54,6 @@ abstract class MapsindoorsPlatform extends PlatformInterface {
   Future<bool?> isAPIKeyValid();
   Future<bool?> isInitialized();
   Future<bool?> isReady();
-  void removeOnMapsIndoorsReadyListener(OnMapsIndoorsReadyListener listener);
   Future<MPGeocodeResult?> reverseGeoCode(MPPoint point);
   Future<bool?> setLanguage(String language);
   Future<MPError?> synchronizeContent();

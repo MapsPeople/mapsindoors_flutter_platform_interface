@@ -18,7 +18,11 @@ abstract class DirectionsServicePlatform extends PlatformInterface {
 
   Future<void> addAvoidWayType(String wayType);
 
-  Future<void> clearWayType();
+  Future<void> clearAvoidWayType();
+
+  Future<void> addExcludeWayType(String wayType);
+
+  Future<void> clearExcludeWayType();
 
   Future<void> setIsDeparture(bool isDeparture);
 

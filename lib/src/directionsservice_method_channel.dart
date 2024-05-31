@@ -16,8 +16,8 @@ class MethodChannelDirectionsService extends DirectionsServicePlatform {
   }
 
   @override
-  Future<void> clearWayType() {
-    return directionsServiceMethodChannel.invokeMethod('DSE_clearWayType');
+  Future<void> clearAvoidWayType() {
+    return directionsServiceMethodChannel.invokeMethod('DSE_clearAvoidWayType');
   }
 
   @override
@@ -58,5 +58,17 @@ class MethodChannelDirectionsService extends DirectionsServicePlatform {
   Future<void> setTime(int time) {
     return directionsServiceMethodChannel
         .invokeMethod('DSE_setTime', {"time": time});
+  }
+
+  @override
+  Future<void> addExcludeWayType(String wayType) {
+    return directionsServiceMethodChannel
+        .invokeMethod('DSE_addExcludeWayType', {"wayType": wayType});
+  }
+
+  @override
+  Future<void> clearExcludeWayType() {
+    return directionsServiceMethodChannel
+        .invokeMethod('DSE_clearExcludeWayType');
   }
 }

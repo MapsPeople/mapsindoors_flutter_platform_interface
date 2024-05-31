@@ -76,10 +76,10 @@ class MPSelectionBehavior extends MapsIndoorsObject {
   /// Get a builder object
   static MPSelectionBehaviorBuilder builder() => MPSelectionBehaviorBuilder();
 
-  /// Whether the filtering is allowed to change the floor if no results are visible on the current floor
+  /// Whether the selection is allowed to change the floor if no results are visible on the current floor
   final bool allowFloorChange;
 
-  /// Whether the filtering should move the camera to encompass the results
+  /// Whether the selection should move the camera to encompass the results
   final bool moveCamera;
 
   /// How long the camera movement should be animated for, set to 0 disables animation
@@ -88,7 +88,7 @@ class MPSelectionBehavior extends MapsIndoorsObject {
   /// Whether to open the info window if a single result is returned
   final bool showInfoWindow;
 
-  /// Whether the filtering is allowed to zoom in/out the camera
+  /// Whether the selection is allowed to zoom in/out the camera
   final bool zoomToFit;
 
   const MPSelectionBehavior._(this.allowFloorChange, this.moveCamera,
@@ -102,6 +102,52 @@ class MPSelectionBehavior extends MapsIndoorsObject {
       "moveCamera": moveCamera,
       "animationDuration": animationDuration,
       "showInfoWindow": showInfoWindow,
+      "zoomToFit": zoomToFit
+    };
+  }
+}
+
+/// Sets a behavior for the map when calling MapsIndoorsWidget.setHighlight
+///
+/// Has a [DEFAULT] behavior
+class MPHighlightBehavior extends MapsIndoorsObject {
+  /// The default behavior for highlight:
+  ///
+  /// Animate camera = false
+  ///
+  /// Animation duration = 0
+  ///
+  /// Allow floor change = false
+  ///
+  /// Zoom to fit = true
+  static const MPHighlightBehavior DEFAULT =
+      MPHighlightBehavior._(false, false, 0, true);
+
+  /// Get a builder object
+  static MPHighlightBehaviorBuilder builder() => MPHighlightBehaviorBuilder();
+
+  /// Whether the highlight is allowed to change the floor if no results are visible on the current floor
+  final bool allowFloorChange;
+
+  /// Whether the highlight should move the camera to encompass the results
+  final bool moveCamera;
+
+  /// How long the camera movement should be animated for, set to 0 disables animation
+  final int animationDuration;
+
+  /// Whether the highlight is allowed to zoom in/out the camera
+  final bool zoomToFit;
+
+  const MPHighlightBehavior._(this.allowFloorChange, this.moveCamera,
+      this.animationDuration, this.zoomToFit);
+
+  /// Converts the [MPHighlightBehavior] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "allowFloorChange": allowFloorChange,
+      "moveCamera": moveCamera,
+      "animationDuration": animationDuration,
       "zoomToFit": zoomToFit
     };
   }
@@ -166,6 +212,17 @@ class MPSelectionBehaviorBuilder extends Builder<MPSelectionBehavior> {
         _moveCamera ?? MPSelectionBehavior.DEFAULT.moveCamera,
         _animationDuration ?? MPSelectionBehavior.DEFAULT.animationDuration,
         _showInfoWindow ?? MPSelectionBehavior.DEFAULT.showInfoWindow,
+        _zoomToFit ?? MPSelectionBehavior.DEFAULT.zoomToFit);
+  }
+}
+
+class MPHighlightBehaviorBuilder extends Builder<MPHighlightBehavior> {
+  @override
+  MPHighlightBehavior build() {
+    return MPHighlightBehavior._(
+        _allowFloorChange ?? MPHighlightBehavior.DEFAULT.allowFloorChange,
+        _moveCamera ?? MPHighlightBehavior.DEFAULT.moveCamera,
+        _animationDuration ?? MPHighlightBehavior.DEFAULT.animationDuration,
         _zoomToFit ?? MPSelectionBehavior.DEFAULT.zoomToFit);
   }
 }
