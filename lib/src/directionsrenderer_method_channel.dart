@@ -34,8 +34,13 @@ class MethodChannelDirectionsRenderer extends DirectionsRendererPlatform {
       directionsRendererMethodChannel.invokeMethod('DRE_previousLeg');
 
   @override
-  Future<void> setRoute(MPRoute? route) => directionsRendererMethodChannel
-      .invokeMethod('DRE_setRoute', {"route": jsonEncode(route)});
+  Future<void> setRoute(MPRoute? route,
+          Map<num, MPRouteStopIconConfigInterface>? stopIcons) =>
+      directionsRendererMethodChannel.invokeMethod('DRE_setRoute', {
+        "route": jsonEncode(route),
+        "stopIcons": stopIcons
+            ?.map((key, value) => MapEntry(key, value.getImage().toString()))
+      });
 
   @override
   Future<void> setAnimatedPolyline(
@@ -77,6 +82,9 @@ class MethodChannelDirectionsRenderer extends DirectionsRendererPlatform {
       case MPCameraViewFitMode.startToEndAligned:
         cameraFitMode = 2;
         break;
+      case MPCameraViewFitMode.none:
+        cameraFitMode = 3;
+        break;
     }
     return directionsRendererMethodChannel.invokeMethod(
         'DRE_setCameraViewFitMode', {"cameraFitMode": cameraFitMode});
@@ -99,4 +107,10 @@ class MethodChannelDirectionsRenderer extends DirectionsRendererPlatform {
   @override
   Future<void> showRouteLegButtons(bool show) => directionsRendererMethodChannel
       .invokeMethod('DRE_showRouteLegButtons', {"show": show});
+
+  @override
+  Future<void> setDefaultRouteStopIcon(MPRouteStopIconConfigInterface icon) {
+    return directionsRendererMethodChannel.invokeMethod(
+        'DRE_setDefaultRouteStopIcon', {"icon": icon.getImage().toString()});
+  }
 }

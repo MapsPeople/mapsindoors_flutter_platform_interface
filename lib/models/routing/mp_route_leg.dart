@@ -24,14 +24,14 @@ class MPRouteLeg extends MapsIndoorsObject {
   /// The expected time it takes to traverse
   final MPRouteProperty? duration;
 
-  const MPRouteLeg._(
-      {this.startAddress,
-      this.endAddress,
-      this.startLocation,
-      this.endLocation,
-      this.steps,
-      this.distance,
-      this.duration});
+  /// The reason for the start of the leg
+  final String? legStartReason;
+
+  /// The reason for the end of the leg
+  final String? legEndReason;
+
+  /// The stop index of the leg
+  final num? stopIndex;
 
   /// Converts the [MPRouteLeg] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override
@@ -44,7 +44,10 @@ class MPRouteLeg extends MapsIndoorsObject {
       "end_location": endLocation?.toJson(),
       "steps": jsonMPRouteSteps,
       "distance": distance?.toJson(),
-      "duration": duration?.toJson()
+      "duration": duration?.toJson(),
+      "leg_start_reason": legStartReason,
+      "leg_end_reason": legEndReason,
+      "stop_index": stopIndex,
     };
   }
 
@@ -53,30 +56,26 @@ class MPRouteLeg extends MapsIndoorsObject {
       ? MPRouteLeg._fromJson(json is String ? jsonDecode(json) : json)
       : null;
 
-  static MPRouteLeg _fromJson(data) {
-    final endAddress = data["end_address"];
-    final startAddress = data["start_address"];
-    final distance = (data["distance"] is num)
-        ? MPRouteProperty.fromJson(data["distance"])
-        : MPRouteProperty.fromJson(data["distance"]);
-    final duration = (data["duration"] is num)
-        ? MPRouteProperty.fromJson(data["duration"])
-        : MPRouteProperty.fromJson(data["duration"]);
-    final startLocation = MPRouteCoordinate.fromJson(data["start_location"]);
-    final endLocation = MPRouteCoordinate.fromJson(data["end_location"]);
-    final list = convertJsonArray(data["steps"]);
-    final routeSteps = List<MPRouteStep?>.generate(
-        list.length, (index) => MPRouteStep.fromJson(list[index]));
-    routeSteps.removeWhere((element) => element == null);
-    final steps = routeSteps.cast<MPRouteStep>();
+  MPRouteLeg._fromJson(data)
+      : startAddress = data["start_address"],
+        endAddress = data["end_address"],
+        startLocation = MPRouteCoordinate.fromJson(data["start_location"]),
+        endLocation = MPRouteCoordinate.fromJson(data["end_location"]),
+        steps = _convertSteps(data["steps"]),
+        distance = MPRouteProperty.fromJson(data["distance"]),
+        duration = MPRouteProperty.fromJson(data["duration"]),
+        legStartReason = data["leg_start_reason"],
+        legEndReason = data["leg_end_reason"],
+        stopIndex = data["stop_index"];
 
-    return MPRouteLeg._(
-        startAddress: startAddress,
-        endAddress: endAddress,
-        startLocation: startLocation,
-        endLocation: endLocation,
-        steps: steps,
-        distance: distance,
-        duration: duration);
+  static List<MPRouteStep>? _convertSteps(dynamic data) {
+    if (data != null) {
+      var jsonRouteSteps = convertJsonArray(data);
+      var routeSteps = List<MPRouteStep?>.generate(jsonRouteSteps.length,
+          (index) => MPRouteStep.fromJson(jsonRouteSteps[index]));
+      routeSteps.removeWhere((element) => element == null);
+      return routeSteps.cast<MPRouteStep>();
+    }
+    return null;
   }
 }

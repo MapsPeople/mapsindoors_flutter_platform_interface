@@ -4,7 +4,9 @@ part of 'package:mapsindoors_platform_interface/platform_library.dart';
 enum MPSolutionDisplayRuleEnum {
   buildingOutline("buildingOutline"),
   selectionHighlight("selectionHighlight"),
-  positionIndicator("positionIndicator");
+  positionIndicator("positionIndicator"),
+  selection("selection"),
+  highlight("highlight");
 
   final String name;
   const MPSolutionDisplayRuleEnum(this.name);

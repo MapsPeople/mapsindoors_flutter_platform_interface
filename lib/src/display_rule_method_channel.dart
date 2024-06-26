@@ -444,4 +444,369 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   Future<void> reset(MPDisplayRuleId id) {
     return displayRuleMethodChannel.invokeMethod("DRU_reset", {"id": id.value});
   }
+
+  @override
+  Future<String?> getModel3DModel(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getModel3DModel", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getModel3DRotationX(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getModel3DRotationX", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getModel3DRotationY(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getModel3DRotationY", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getModel3DRotationZ(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getModel3DRotationZ", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getModel3DScale(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getModel3DScale", {"id": id.value});
+  }
+
+  @override
+  Future<bool?> isModel3DVisible(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_isModel3DVisible", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getModel3DZoomFrom(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getModel3DZoomFrom", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getModel3DZoomTo(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getModel3DZoomTo", {"id": id.value});
+  }
+
+  @override
+  Future<void> setModel3DModel(MPDisplayRuleId id, String model) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_setModel3DModel", {"id": id.value, "model": model});
+  }
+
+  @override
+  Future<void> setModel3DRotationX(MPDisplayRuleId id, num rotation) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setModel3DRotationX", {"id": id.value, "rotation": rotation});
+  }
+
+  @override
+  Future<void> setModel3DRotationY(MPDisplayRuleId id, num rotation) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setModel3DRotationY", {"id": id.value, "rotation": rotation});
+  }
+
+  @override
+  Future<void> setModel3DRotationZ(MPDisplayRuleId id, num rotation) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setModel3DRotationZ", {"id": id.value, "rotation": rotation});
+  }
+
+  @override
+  Future<void> setModel3DScale(MPDisplayRuleId id, num scale) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_setModel3DScale", {"id": id.value, "scale": scale});
+  }
+
+  @override
+  Future<void> setModel3DVisible(MPDisplayRuleId id, bool visible) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setModel3DVisible", {"id": id.value, "visible": visible});
+  }
+
+  @override
+  Future<void> setModel3DZoomFrom(MPDisplayRuleId id, num from) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setModel3DZoomFrom", {"id": id.value, "zoomFrom": from});
+  }
+
+  @override
+  Future<void> setModel3DZoomTo(MPDisplayRuleId id, num to) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_setModel3DZoomTo", {"id": id.value, "zoomTo": to});
+  }
+
+  @override
+  Future<String?> getBadgeFillColor(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgeFillColor", {"id": id.value});
+  }
+
+  @override
+  Future<MPBadgePosition?> getBadgePosition(MPDisplayRuleId id) async {
+    final ret = await displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgePosition", {"id": id.value});
+    return MPBadgePosition.fromValue(ret);
+  }
+
+  @override
+  Future<num?> getBadgeRadius(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgeRadius", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getBadgeScale(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgeScale", {"id": id.value});
+  }
+
+  @override
+  Future<String?> getBadgeStrokeColor(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgeStrokeColor", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getBadgeStrokeWidth(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgeStrokeWidth", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getBadgeZoomFrom(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgeZoomFrom", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getBadgeZoomTo(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getBadgeZoomTo", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getExtrusionLightnessFactor(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getExtrusionLightnessFactor", {"id": id.value});
+  }
+
+  @override
+  Future<MPIconPlacement?> getIconPlacement(MPDisplayRuleId id) async {
+    final ret = await displayRuleMethodChannel
+        .invokeMethod("DRU_getIconPlacement", {"id": id.value});
+    return MPIconPlacement.fromValue(ret);
+  }
+
+  @override
+  Future<num?> getLabelStyleBearing(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleBearing", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getLabelStyleHaloBlur(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleHaloBlur", {"id": id.value});
+  }
+
+  @override
+  Future<String?> getLabelStyleHaloColor(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleHaloColor", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getLabelStyleHaloWidth(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleHaloWidth", {"id": id.value});
+  }
+
+  @override
+  Future<String?> getLabelStyleTextColor(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleTextColor", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getLabelStyleTextOpacity(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleTextOpacity", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getLabelStyleTextSize(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleTextSize", {"id": id.value});
+  }
+
+  @override
+  Future<MPLabelType?> getLabelType(MPDisplayRuleId id) async {
+    final ret = await displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelType", {"id": id.value});
+    return MPLabelType.fromValue(ret);
+  }
+
+  @override
+  Future<num?> getPolygonLightnessFactor(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getPolygonLightnessFactor", {"id": id.value});
+  }
+
+  @override
+  Future<num?> getWallLightnessFactor(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_getWallLightnessFactor", {"id": id.value});
+  }
+
+  @override
+  Future<bool?> isBadgeVisible(MPDisplayRuleId id) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_isBadgeVisible", {"id": id.value});
+  }
+
+  @override
+  Future<void> setBadgeFillColor(MPDisplayRuleId id, String color) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setBadgeFillColor", {"id": id.value, "color": color});
+  }
+
+  @override
+  Future<void> setBadgePosition(MPDisplayRuleId id, MPBadgePosition position) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setBadgePosition",
+        {"id": id.value, "position": position.toJson()});
+  }
+
+  @override
+  Future<void> setBadgeRadius(MPDisplayRuleId id, num radius) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_setBadgeRadius", {"id": id.value, "radius": radius});
+  }
+
+  @override
+  Future<void> setBadgeScale(MPDisplayRuleId id, num scale) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_setBadgeScale", {"id": id.value, "scale": scale});
+  }
+
+  @override
+  Future<void> setBadgeStrokeColor(MPDisplayRuleId id, String color) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setBadgeStrokeColor", {"id": id.value, "color": color});
+  }
+
+  @override
+  Future<void> setBadgeStrokeWidth(MPDisplayRuleId id, num width) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setBadgeStrokeWidth", {"id": id.value, "width": width});
+  }
+
+  @override
+  Future<void> setBadgeVisible(MPDisplayRuleId id, bool visible) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setBadgeVisible", {"id": id.value, "visible": visible});
+  }
+
+  @override
+  Future<void> setBadgeZoomFrom(MPDisplayRuleId id, num from) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setBadgeZoomFrom", {"id": id.value, "zoomFrom": from});
+  }
+
+  @override
+  Future<void> setBadgeZoomTo(MPDisplayRuleId id, num to) {
+    return displayRuleMethodChannel
+        .invokeMethod("DRU_setBadgeZoomTo", {"id": id.value, "zoomTo": to});
+  }
+
+  @override
+  Future<void> setExtrusionLightnessFactor(MPDisplayRuleId id, num factor) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setExtrusionLightnessFactor", {"id": id.value, "factor": factor});
+  }
+
+  @override
+  Future<void> setIconPlacement(MPDisplayRuleId id, MPIconPlacement placement) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setIconPlacement",
+        {"id": id.value, "placement": placement.toJson()});
+  }
+
+  @override
+  Future<void> setLabelStyleBearing(MPDisplayRuleId id, num bearing) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelStyleBearing", {"id": id.value, "bearing": bearing});
+  }
+
+  @override
+  Future<void> setLabelStyleHaloBlur(MPDisplayRuleId id, num blur) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelStyleHaloBlur", {"id": id.value, "blur": blur});
+  }
+
+  @override
+  Future<void> setLabelStyleHaloColor(MPDisplayRuleId id, String color) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelStyleHaloColor", {"id": id.value, "color": color});
+  }
+
+  @override
+  Future<void> setLabelStyleHaloWidth(MPDisplayRuleId id, num width) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelStyleHaloWidth", {"id": id.value, "width": width});
+  }
+
+  @override
+  Future<void> setLabelStyleTextColor(MPDisplayRuleId id, String color) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelStyleTextColor", {"id": id.value, "color": color});
+  }
+
+  @override
+  Future<void> setLabelStyleTextOpacity(MPDisplayRuleId id, num opacity) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelStyleTextOpacity", {"id": id.value, "opacity": opacity});
+  }
+
+  @override
+  Future<void> setLabelStyleTextSize(MPDisplayRuleId id, num size) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelStyleTextSize", {"id": id.value, "size": size});
+  }
+
+  @override
+  Future<void> setLabelType(MPDisplayRuleId id, MPLabelType type) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setLabelType", {"id": id.value, "type": type.toJson()});
+  }
+
+  @override
+  Future<void> setPolygonLightnessFactor(MPDisplayRuleId id, num factor) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setPolygonLightnessFactor", {"id": id.value, "factor": factor});
+  }
+
+  @override
+  Future<void> setWallLightnessFactor(MPDisplayRuleId id, num factor) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setWallLightnessFactor", {"id": id.value, "factor": factor});
+  }
+
+  @override
+  Future<MPLabelGraphic?> getLabelStyleGraphic(MPDisplayRuleId id) async {
+    final ret = await displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStyleGraphic", {"id": id.value});
+    return MPLabelGraphic.fromJson(ret);
+  }
+
+  @override
+  Future<void> setLabelStyleGraphic(
+      MPDisplayRuleId id, MPLabelGraphic graphic) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setLabelStyleGraphic",
+        {"id": id.value, "graphic": graphic._jsonEncode()});
+  }
 }

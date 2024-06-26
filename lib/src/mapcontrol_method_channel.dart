@@ -258,9 +258,9 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   }
 
   @override
-  Future<void> selectBuilding(MPBuilding building, bool moveCamera) {
+  Future<void> selectBuilding(MPBuilding? building, bool moveCamera) {
     return mapControlMethodChannel.invokeMethod("MPC_selectBuilding",
-        {"building": building._jsonEncode(), "moveCamera": moveCamera});
+        {"building": building?._jsonEncode(), "moveCamera": moveCamera});
   }
 
   @override
@@ -277,9 +277,9 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   }
 
   @override
-  Future<void> selectVenue(MPVenue venue, bool moveCamera) {
+  Future<void> selectVenue(MPVenue? venue, bool moveCamera) {
     return mapControlMethodChannel.invokeMethod("MPC_selectVenue",
-        {"venue": venue._jsonEncode(), "moveCamera": moveCamera});
+        {"venue": venue?._jsonEncode(), "moveCamera": moveCamera});
   }
 
   @override
@@ -449,5 +449,65 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   Future<void> setLabelOptions(num? textSize, String? color, bool showHalo) {
     return mapControlMethodChannel.invokeMethod("MPC_setLabelOptions",
         {"textSize": textSize?.round(), "color": color, "showHalo": showHalo});
+  }
+
+  @override
+  Future<List<MPFeatureType>> getHiddenFeatures() async {
+    var ret = <MPFeatureType>[];
+    final res = (await mapControlMethodChannel
+        .invokeListMethod<int>("MPC_getHiddenFeatures"));
+    if (res == null) {
+      return [];
+    }
+    for (int value in res) {
+      ret.add(MPFeatureType.fromValue(value));
+    }
+    return ret;
+  }
+
+  @override
+  Future<void> setHiddenFeatures(List<MPFeatureType> features) {
+    return mapControlMethodChannel.invokeMethod("MPC_setHiddenFeatures",
+        {"features": features.map((e) => e.toJson()).toList()});
+  }
+
+  @override
+  Future<void> clearHighlight() {
+    return mapControlMethodChannel.invokeMethod("MPC_clearHighlight");
+  }
+
+  @override
+  Future<void> setHighlight(
+      List<MPLocation> locations, MPHighlightBehavior behavior) {
+    return mapControlMethodChannel.invokeMethod("MPC_setHighlight", {
+      "locations": locations.map<String>((e) => e.id.value).toList(),
+      "behavior": behavior._jsonEncode()
+    });
+  }
+
+  @override
+  Future<MPSelectionMode> getBuildingSelectionMode() async {
+    final mode = await mapControlMethodChannel
+        .invokeMethod("MPC_getBuildingSelectionMode");
+    return MPSelectionMode.values[mode];
+  }
+
+  @override
+  Future<MPSelectionMode> getFloorSelectionMode() async {
+    final mode =
+        await mapControlMethodChannel.invokeMethod("MPC_getFloorSelectionMode");
+    return MPSelectionMode.values[mode];
+  }
+
+  @override
+  Future<void> setBuildingSelectionMode(MPSelectionMode mode) {
+    return mapControlMethodChannel
+        .invokeMethod("MPC_setBuildingSelectionMode", {"mode": mode.index});
+  }
+
+  @override
+  Future<void> setFloorSelectionMode(MPSelectionMode mode) {
+    return mapControlMethodChannel
+        .invokeMethod("MPC_setFloorSelectionMode", {"mode": mode.index});
   }
 }

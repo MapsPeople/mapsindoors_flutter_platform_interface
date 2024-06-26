@@ -16,8 +16,8 @@ class MethodChannelDirectionsService extends DirectionsServicePlatform {
   }
 
   @override
-  Future<void> clearWayType() {
-    return directionsServiceMethodChannel.invokeMethod('DSE_clearWayType');
+  Future<void> clearAvoidWayType() {
+    return directionsServiceMethodChannel.invokeMethod('DSE_clearAvoidWayType');
   }
 
   @override
@@ -27,15 +27,18 @@ class MethodChannelDirectionsService extends DirectionsServicePlatform {
   }
 
   @override
-  Future<MPRoute> getRoute(MPPoint origin, MPPoint destination) async {
-    Map<String, dynamic>? result = await directionsServiceMethodChannel
-        .invokeMapMethod('DSE_getRoute', {
+  Future<MPRoute> getRoute(MPPoint origin, MPPoint destination,
+      List<MPPoint>? stops, bool? optimize) async {
+    final result =
+        await directionsServiceMethodChannel.invokeMethod('DSE_getRoute', {
       'origin': origin._jsonEncode(),
-      'destination': destination._jsonEncode()
+      'destination': destination._jsonEncode(),
+      'stops': stops?.map((e) => e._jsonEncode()).toList(),
+      'optimize': optimize
     });
 
-    final route = MPRoute.fromJson(result?["route"]);
-    final error = MPError.fromJson(result?["error"]);
+    final route = MPRoute.fromJson(result["route"]);
+    final error = MPError.fromJson(result["error"]);
 
     if (route != null) {
       return Future.value(route);
@@ -58,5 +61,17 @@ class MethodChannelDirectionsService extends DirectionsServicePlatform {
   Future<void> setTime(int time) {
     return directionsServiceMethodChannel
         .invokeMethod('DSE_setTime', {"time": time});
+  }
+
+  @override
+  Future<void> addExcludeWayType(String wayType) {
+    return directionsServiceMethodChannel
+        .invokeMethod('DSE_addExcludeWayType', {"wayType": wayType});
+  }
+
+  @override
+  Future<void> clearExcludeWayType() {
+    return directionsServiceMethodChannel
+        .invokeMethod('DSE_clearExcludeWayType');
   }
 }

@@ -183,6 +183,18 @@ class MPLocation extends MPEntity<MPLocationId> {
   /// Chech whether this location is bookable, this only checks if the location is allowed to be booked
   bool get isBookable => _properties?.bookable ?? false;
 
+  /// Get the location's settings object
+  bool? get selectable => _properties?.locationSettings?.selectable;
+
+  /// Set whether the location is selectable
+  set selectable(bool? selectable) {
+    _properties?.locationSettings?.selectable = selectable;
+    _properties?.locationSettings ??=
+        MPLocationSettings(selectable: selectable);
+    LocationPlatform.instance
+        .setLocationSettingsSelectable(id, _properties!.locationSettings!);
+  }
+
   /// Gets the location's [MPLocationType] [baseType]
   MPLocationType get baseType {
     switch (_properties?.type) {

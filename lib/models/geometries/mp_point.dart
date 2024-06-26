@@ -90,13 +90,7 @@ class MPPoint extends MPGeometry {
   /// Converts the [MPPoint] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override
   Map<String, dynamic> toJson() {
-    if (_lat == null || _lng == null) {
-      return {
-        "coordinates": [0.0, 0.0],
-        "type": type
-      };
-    }
-    List<num> coords = [longitude, latitude];
+    List<num> coords = [_lng ?? 0.0, _lat ?? 0.0];
 
     if (_floorIndex != null) {
       coords.add(_floorIndex!);

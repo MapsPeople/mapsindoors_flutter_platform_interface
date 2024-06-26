@@ -33,11 +33,18 @@ abstract class UtilPlatform extends PlatformInterface {
   Future<num?> geometryGetSquaredDistanceToClosestEdge(
       MPGeometry it, MPPoint point);
   //endregion
+
   //region solution
   Future<String?> parseMapClientUrl(String venueId, String locationId);
   Future<void> setEnableClustering(bool enable);
   Future<void> setCollisionHandling(MPCollisionHandling handling);
+  Future<void> setLocationSettings(MPLocationSettings settings);
   Future<void> setExtrusionOpacity(num opacity);
   Future<void> setWallOpacity(num opacity);
+  //endregion
+
+  //region type
+  Future<void> setTypeLocationSettingsSelectable(
+      String name, MPLocationSettings settings);
   //endregion
 }

@@ -8,4 +8,11 @@ part of 'package:mapsindoors_platform_interface/platform_library.dart';
 ///
 /// [startToEndAligned] : The camera will point in the same direction as a line that
 /// goes directly from the origin to the destination
-enum MPCameraViewFitMode { northAligned, firstStepAligned, startToEndAligned }
+///
+/// [none] : The camera will not move
+enum MPCameraViewFitMode {
+  northAligned,
+  firstStepAligned,
+  startToEndAligned,
+  none
+}

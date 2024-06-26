@@ -22,9 +22,9 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   }
 
   Future<MPVenue?> getCurrentVenue();
-  Future<void> selectVenue(MPVenue venue, bool moveCamera);
+  Future<void> selectVenue(MPVenue? venue, bool moveCamera);
   Future<MPBuilding?> getCurrentBuilding();
-  Future<void> selectBuilding(MPBuilding building, bool moveCamera);
+  Future<void> selectBuilding(MPBuilding? building, bool moveCamera);
   Future<void> clearFilter();
   Future<bool> setFilter(MPFilter filter, MPFilterBehavior behavior);
   Future<void> setFilterWithLocations(
@@ -56,6 +56,8 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   Future<void> enableLiveData(
       String domainType, OnLiveLocationUpdateListener? listener);
   Future<void> disableLiveData(String domainType);
+  Future<void> setHiddenFeatures(List<MPFeatureType> features);
+  Future<List<MPFeatureType>> getHiddenFeatures();
   void addOnCameraEventListner(MPCameraEventListener listener);
   void removeOnCameraEventListner(MPCameraEventListener listener);
   void addOnFloorUpdateListener(OnFloorUpdateListener listener);
@@ -76,4 +78,11 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   Future<void> moveCamera(MPCameraUpdate update);
   Future<MPCameraPosition> currentCameraPosition();
   Future<void> setLabelOptions(num? textSize, String? color, bool showHalo);
+  Future<void> clearHighlight();
+  Future<void> setHighlight(
+      List<MPLocation> locations, MPHighlightBehavior behavior);
+  Future<void> setBuildingSelectionMode(MPSelectionMode mode);
+  Future<MPSelectionMode> getBuildingSelectionMode();
+  Future<void> setFloorSelectionMode(MPSelectionMode mode);
+  Future<MPSelectionMode> getFloorSelectionMode();
 }

@@ -38,20 +38,6 @@ class MPRouteStep extends MapsIndoorsObject {
   /// A list of modes it is possible to travel the step with (eg. a bike path can both be walked on, as well as biked on)
   final List<String>? availableTravelModes;
 
-  const MPRouteStep._(
-      {this.distance,
-      this.duration,
-      this.startLocation,
-      this.endLocation,
-      this.geometry,
-      this.highway,
-      this.abutters,
-      this.htmlInstructions,
-      this.maneuver,
-      this.travelMode,
-      this.steps,
-      this.availableTravelModes});
-
   /// Converts the [MPRouteStep] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override
   Map<String, dynamic> toJson() {
@@ -69,7 +55,7 @@ class MPRouteStep extends MapsIndoorsObject {
       "maneuver": maneuver,
       "travel_mode": travelMode,
       "steps": jsonRouteSteps,
-      "available_travel_modes": availableTravelModes
+      "available_travel_modes": availableTravelModes,
     };
   }
 
@@ -78,59 +64,44 @@ class MPRouteStep extends MapsIndoorsObject {
       ? MPRouteStep._fromJson(json is String ? jsonDecode(json) : json)
       : null;
 
-  static MPRouteStep _fromJson(data) {
-    final distance = (data["distance"] is num)
-        ? MPRouteProperty.fromJson(data["distance"])
-        : MPRouteProperty.fromJson(data["distance"]);
-    final duration = (data["duration"] is num)
-        ? MPRouteProperty.fromJson(data["duration"])
-        : MPRouteProperty.fromJson(data["duration"]);
-    final startLocation = MPRouteCoordinate.fromJson(data["start_location"]);
-    final endLocation = MPRouteCoordinate.fromJson(data["end_location"]);
-    dynamic highway;
-    if (data["highway"] is String) {
-      highway = data["highway"];
-    } else if (data["highway"] != null) {
-      highway = data["highway"]["value"];
-    }
-    final abutters = data["abutters"];
-    final htmlInstructions = data["html_instructions"];
-    final maneuver = data["maneuver"];
-    final travelMode = data["travel_mode"];
-    dynamic availableTravelModes;
-    if (data["available_travel_modes"] != null) {
-      availableTravelModes =
-          convertJsonArray<String>(data["available_travel_modes"]);
-    }
-    dynamic steps;
-    if (data["steps"] != null) {
-      var jsonRouteSteps = convertJsonArray(data["steps"]);
+  MPRouteStep._fromJson(data)
+      : distance = MPRouteProperty.fromJson(data["distance"]),
+        duration = MPRouteProperty.fromJson(data["duration"]),
+        startLocation = MPRouteCoordinate.fromJson(data["start_location"]),
+        endLocation = MPRouteCoordinate.fromJson(data["end_location"]),
+        highway = (data["highway"] == null)
+            ? null
+            : (data["highway"] is String)
+                ? data["highway"]
+                : data["highway"]["value"],
+        abutters = data["abutters"],
+        htmlInstructions = data["html_instructions"],
+        maneuver = data["maneuver"],
+        travelMode = data["travel_mode"],
+        availableTravelModes =
+            convertJsonArray<String>(data["available_travel_modes"] ?? []),
+        steps = _convertSteps(data["steps"]),
+        geometry = _convertGeometry(data["geometry"]);
+
+  static List<MPRouteStep>? _convertSteps(dynamic data) {
+    if (data != null) {
+      var jsonRouteSteps = convertJsonArray(data);
       var routeSteps = List<MPRouteStep?>.generate(jsonRouteSteps.length,
           (index) => MPRouteStep.fromJson(jsonRouteSteps[index]));
       routeSteps.removeWhere((element) => element == null);
-      steps = routeSteps.cast<MPRouteStep>();
+      return routeSteps.cast<MPRouteStep>();
     }
+    return null;
+  }
 
-    dynamic geometry;
-    if (data["geometry"] != null) {
-      var jsonGeometry = convertJsonArray(data["geometry"]);
+  static List<MPRouteCoordinate>? _convertGeometry(dynamic data) {
+    if (data != null) {
+      var jsonGeometry = convertJsonArray(data);
       var routeGeometry = List<MPRouteCoordinate?>.generate(jsonGeometry.length,
           (index) => MPRouteCoordinate.fromJson(jsonGeometry[index]));
       routeGeometry.removeWhere((element) => element == null);
-      geometry = routeGeometry.cast<MPRouteCoordinate>();
+      return routeGeometry.cast<MPRouteCoordinate>();
     }
-    return MPRouteStep._(
-        distance: distance,
-        duration: duration,
-        startLocation: startLocation,
-        endLocation: endLocation,
-        highway: highway,
-        abutters: abutters,
-        htmlInstructions: htmlInstructions,
-        maneuver: maneuver,
-        travelMode: travelMode,
-        availableTravelModes: availableTravelModes,
-        steps: steps,
-        geometry: geometry);
+    return null;
   }
 }

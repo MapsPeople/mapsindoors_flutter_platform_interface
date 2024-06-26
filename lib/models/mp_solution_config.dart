@@ -12,6 +12,7 @@ class MPSolutionConfig {
   final MPSettings3D settings3D;
   late MPCollisionHandling? _collisionHandling;
   late bool? _enableClustering;
+  late MPLocationSettings? _locationSettings;
 
   /// Attempts to build a [MPSolutionConfig] from a JSON object, this method will decode the object if needed
   static MPSolutionConfig? fromJson(json) => json != null && json != "null"
@@ -20,7 +21,9 @@ class MPSolutionConfig {
 
   MPSolutionConfig._fromJson(data)
       : settings3D = MPSettings3D.fromJson(data["settings3D"])!,
-        _enableClustering = data["enableClustering"] {
+        _enableClustering = data["enableClustering"],
+        _locationSettings =
+            MPLocationSettings.fromJson(data["locationSettings"]) {
     if (data["collisionHandling"] is int) {
       _collisionHandling =
           MPCollisionHandling.fromValue(data["collisionHandling"]);
@@ -50,5 +53,13 @@ class MPSolutionConfig {
       _collisionHandling = handling;
       UtilPlatform.instance.setCollisionHandling(handling);
     }
+  }
+
+  bool? get selectable => _locationSettings?.selectable;
+
+  set selectable(bool? selectable) {
+    _locationSettings?.selectable = selectable;
+    _locationSettings ??= MPLocationSettings(selectable: selectable);
+    UtilPlatform.instance.setLocationSettings(_locationSettings!);
   }
 }

@@ -20,13 +20,7 @@ class MPRoute extends MapsIndoorsObject {
   /// The outer [bounds] of the route
   final MPBounds? bounds;
 
-  const MPRoute._(
-      {this.legs,
-      this.copyrights,
-      this.summary,
-      this.warnings,
-      this.restrictions,
-      this.bounds});
+  final List<int>? orderedStopIndexes;
 
   /// Converts the [MPRoute] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override
@@ -38,7 +32,8 @@ class MPRoute extends MapsIndoorsObject {
       "summary": summary,
       "warnings": warnings,
       "restrictions": restrictions,
-      "bounds": bounds?.toJson()
+      "bounds": bounds?.toJson(),
+      "ordered_stop_indexes": orderedStopIndexes,
     };
   }
 
@@ -47,26 +42,24 @@ class MPRoute extends MapsIndoorsObject {
       ? MPRoute._fromJson(json is String ? jsonDecode(json) : json)
       : null;
 
-  static MPRoute _fromJson(data) {
-    final copyrights = data["copyrights"];
-    final summary = data["summary"];
-    final warnings = convertJsonArray<String>(data["warnings"]);
-    final restrictions = convertJsonArray<String>(data["restrictions"]);
-    final list = convertJsonArray(data["legs"]);
-    final routeLegs = List<MPRouteLeg?>.generate(
-        list.length, (index) => MPRouteLeg.fromJson(list[index]));
-    routeLegs.removeWhere((element) => element == null);
-    final legs = routeLegs.cast<MPRouteLeg>();
-    dynamic bounds;
-    if (data["bounds"] != null) {
-      //TODO: fix bounds?
+  MPRoute._fromJson(data)
+      : copyrights = data["copyrights"],
+        summary = data["summary"],
+        warnings = convertJsonArray<String>(data["warnings"]),
+        restrictions = convertJsonArray<String>(data["restrictions"]),
+        bounds = null,
+        orderedStopIndexes =
+            convertJsonArray<int>(data["ordered_stop_indexes"] ?? []),
+        legs = _convertLegs(data["legs"]);
+
+  static List<MPRouteLeg>? _convertLegs(dynamic data) {
+    if (data != null) {
+      var jsonRouteLegs = convertJsonArray(data);
+      var routeLegs = List<MPRouteLeg?>.generate(jsonRouteLegs.length,
+          (index) => MPRouteLeg.fromJson(jsonRouteLegs[index]));
+      routeLegs.removeWhere((element) => element == null);
+      return routeLegs.cast<MPRouteLeg>();
     }
-    return MPRoute._(
-        legs: legs,
-        copyrights: copyrights,
-        summary: summary,
-        warnings: warnings,
-        restrictions: restrictions,
-        bounds: bounds);
+    return null;
   }
 }

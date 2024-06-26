@@ -37,9 +37,12 @@ abstract class DirectionsRendererPlatform extends PlatformInterface {
 
   Future<void> setPolyLineColors(String foreground, String background);
 
-  Future<void> setRoute(MPRoute? route);
+  Future<void> setRoute(
+      MPRoute? route, Map<num, MPRouteStopIconConfigInterface>? stopIcons);
 
   Future<void> useContentOfNearbyLocations();
 
   Future<void> showRouteLegButtons(bool show);
+
+  Future<void> setDefaultRouteStopIcon(MPRouteStopIconConfigInterface icon);
 }

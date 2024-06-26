@@ -20,6 +20,7 @@ class MPPropertyData extends MapsIndoorsObject {
   final String? locationType;
   final MPPoint? anchor;
   final bool? bookable;
+  MPLocationSettings? locationSettings;
 
   static MPPropertyData? fromJson(json) => json != null && json != "null"
       ? MPPropertyData._fromJson(json is String ? jsonDecode(json) : json)
@@ -51,7 +52,9 @@ class MPPropertyData extends MapsIndoorsObject {
         imageUrl = data["imageURL"],
         locationType = data["locationType"],
         anchor = MPPoint.fromJson(data["anchor"]),
-        bookable = data["bookable"];
+        bookable = data["bookable"],
+        locationSettings =
+            MPLocationSettings.fromJson(data["locationSettings"]);
 
   static Map<String, T> _convertMap<T>(
       T Function(dynamic value) parser, Map<String, dynamic> map) {
@@ -83,6 +86,7 @@ class MPPropertyData extends MapsIndoorsObject {
       "locationType": locationType,
       "anchor": anchor,
       "bookable": bookable,
+      "locationSettings": locationSettings?.toJson(),
     };
   }
 }

@@ -9,6 +9,8 @@ class MethodChannelMapsindoors extends MapsindoorsPlatform {
   final listenerChannel = const MethodChannel('MapsIndoorsListenerChannel');
   final List<OnMapsIndoorsReadyListener> _readyListeners =
       List.empty(growable: true);
+  final List<MPVenueStatusListener> _venueStatusListeners =
+      List.empty(growable: true);
 
   MPPositionProviderInterface? _positionProvider;
 
@@ -24,7 +26,14 @@ class MethodChannelMapsindoors extends MapsindoorsPlatform {
           listener.call(error);
         }
         break;
-
+      case "onVenueStatusChanged":
+        final MPVenueStatus status =
+            MPVenueStatus.fromStringValue(call.arguments["status"]);
+        final String? venueId = jsonDecode(call.arguments["venueId"]);
+        for (var listener in _venueStatusListeners) {
+          listener.call(venueId, status);
+        }
+        break;
       default:
         throw UnimplementedError();
     }
@@ -257,5 +266,52 @@ class MethodChannelMapsindoors extends MapsindoorsPlatform {
   @override
   MPDisplayRule createDisplayRuleWithName(String name) {
     return MPDisplayRule._(MPDisplayRuleId(name));
+  }
+
+  @override
+  void addOnVenueStatusChangedListener(MPVenueStatusListener listener) {
+    if (_venueStatusListeners.isEmpty) {
+      listenerChannel
+          .invokeMethod("MIL_onVenueStatusListener", {"addListener": true});
+    }
+    _venueStatusListeners.add(listener);
+  }
+
+  @override
+  Future<void> addVenuesToSync(List<String> venueIds) {
+    return mapsIndoorsMethodChannel.invokeMethod(
+        "MIN_addVenuesToSync", {"venueIds": jsonEncode(venueIds)});
+  }
+
+  @override
+  Future<List<String>> getSyncedVenues() async {
+    final venues = await mapsIndoorsMethodChannel
+        .invokeListMethod<String>("MIN_getSyncedVenues");
+    return venues ?? [];
+  }
+
+  @override
+  Future<void> loadWithVenues(String key, List<String> venueIds) async {
+    final error = await mapsIndoorsMethodChannel.invokeMethod(
+        'MIN_loadWithVenues', {"key": key, "venueIds": jsonEncode(venueIds)});
+
+    if (error != null) {
+      return Future.error(MPError.fromJson(error)!);
+    }
+  }
+
+  @override
+  void removeOnVenueStatusChangedListener(MPVenueStatusListener listener) {
+    _venueStatusListeners.remove(listener);
+    if (_venueStatusListeners.isEmpty) {
+      listenerChannel
+          .invokeMethod("MIL_onVenueStatusListener", {"addListener": false});
+    }
+  }
+
+  @override
+  Future<void> removeVenuesToSync(List<String> venueIds) {
+    return mapsIndoorsMethodChannel.invokeMethod(
+        "MIN_removeVenuesToSync", {"venueIds": jsonEncode(venueIds)});
   }
 }

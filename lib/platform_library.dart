@@ -14,6 +14,7 @@ part 'display_rule_platform_interface.dart';
 part 'mapcontrol_platform_interface.dart';
 part 'mapsindoors_platform_interface.dart';
 part 'util_platform_interface.dart';
+part 'location_platform_interface.dart';
 
 part 'src/directionsrenderer_method_channel.dart';
 part 'src/directionsservice_method_channel.dart';
@@ -21,6 +22,7 @@ part 'src/display_rule_method_channel.dart';
 part 'src/mapcontrol_method_channel.dart';
 part 'src/mapsindoors_method_channel.dart';
 part 'src/util_method_channel.dart';
+part 'src/location_method_channel.dart';
 
 part 'src/util.dart';
 
@@ -44,6 +46,12 @@ part 'models/enums/mp_camera_event.dart';
 part 'models/enums/mp_camera_view_fit_mode.dart';
 part 'models/enums/live_data_domain_types.dart';
 part 'models/enums/mp_highway.dart';
+part 'models/enums/mp_feature_type.dart';
+part 'models/enums/mp_badge_position.dart';
+part 'models/enums/mp_label_type.dart';
+part 'models/enums/mp_icon_placement.dart';
+part 'models/enums/mp_venue_status.dart';
+part 'models/enums/mp_selection_mode.dart';
 
 part 'models/listeners/mp_camera_event_listener.dart';
 part 'models/listeners/on_building_found_at_camera_target_listener.dart';
@@ -59,12 +67,15 @@ part 'models/listeners/on_position_update_listener.dart';
 part 'models/listeners/on_leg_selected_listener.dart';
 part 'models/listeners/on_live_location_update_listener.dart';
 part 'models/listeners/on_map_ready_listener.dart';
+part 'models/listeners/mp_venue_status_listener.dart';
 
 part 'models/routing/mp_route.dart';
 part 'models/routing/mp_route_leg.dart';
 part 'models/routing/mp_route_step.dart';
 part 'models/routing/mp_route_coordinate.dart';
 part 'models/routing/mp_route_property.dart';
+part 'models/routing/mp_route_stop_icon_config_interface.dart';
+part 'models/routing/mp_route_stop_icon_config.dart';
 
 part 'models/mp_display_rule.dart';
 part 'models/mp_error.dart';
@@ -87,6 +98,9 @@ part 'models/mp_user_role.dart';
 part 'models/mp_icon_size.dart';
 part 'models/mp_map_style.dart';
 part 'models/mp_route_result.dart';
+part 'models/mp_location_settings.dart';
+part 'models/mp_label_graphic.dart';
+part 'models/mp_poi_type.dart';
 
 part 'models/map/mp_camera_update.dart';
 part 'models/map/mp_camera_position.dart';
