@@ -10,7 +10,7 @@ abstract class MapcontrolPlatform extends PlatformInterface {
 
   /// The default instance of [MapcontrolPlatform] to use.
   ///
-  /// Defaults to [MethodChannelMapcontrol].
+  /// Defaults to [MethodChannelMapControl].
   static MapcontrolPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own

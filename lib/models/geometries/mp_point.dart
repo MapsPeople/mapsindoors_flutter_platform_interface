@@ -117,7 +117,7 @@ class MPPoint extends MPGeometry {
   @override
   String toString() => "Lat: $latitude, Lng: $longitude";
 
-  /// Gets the position of the point, which is [this]
+  /// Gets the position of the point, which is this
   @override
   MPPoint get position => this;
 }
