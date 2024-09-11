@@ -510,4 +510,10 @@ class MethodChannelMapControl extends MapcontrolPlatform {
     return mapControlMethodChannel
         .invokeMethod("MPC_setFloorSelectionMode", {"mode": mode.index});
   }
+
+  @override
+  Future<void> showCompassOnRotate(bool show) {
+    return mapControlMethodChannel
+        .invokeMethod("MPC_showCompassOnRotate", {"show": show});
+  }
 }

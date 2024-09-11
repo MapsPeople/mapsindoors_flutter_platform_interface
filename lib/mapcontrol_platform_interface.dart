@@ -85,4 +85,5 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   Future<MPSelectionMode> getBuildingSelectionMode();
   Future<void> setFloorSelectionMode(MPSelectionMode mode);
   Future<MPSelectionMode> getFloorSelectionMode();
+  Future<void> showCompassOnRotate(bool show);
 }

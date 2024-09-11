@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0
+
+* Added interface for disabling built-in compass
+
 ## 3.0.2
 
 * No changes
