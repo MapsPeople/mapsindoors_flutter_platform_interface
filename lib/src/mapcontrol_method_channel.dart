@@ -74,7 +74,7 @@ class MethodChannelMapControl extends MapcontrolPlatform {
         break;
       case "onCameraEvent":
         for (final listener in _cameraEventListeners) {
-          listener(call.arguments);
+          listener(MPCameraEvent.values[call.arguments]);
         }
         break;
       case "onFloorUpdate":

@@ -1,6 +1,14 @@
 # Changelog
 
+## 3.1.1
+
+### Fixed
+
+* Fixed issue where camera events would not be propagated to the Flutter layer
+
 ## 3.1.0
+
+### Added
 
 * Added interface for disabling built-in compass
 
