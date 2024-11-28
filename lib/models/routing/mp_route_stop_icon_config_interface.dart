@@ -10,7 +10,7 @@ class MPRouteStopIconConfig extends MapsIndoorsObject
   final String label;
 
   /// The color for the icon. must be in hex format. eg. #FF0000
-  final String color;
+  final Color color;
 
   /// Creates a new instance of [MPRouteStopIconConfig].
   MPRouteStopIconConfig({
@@ -32,7 +32,7 @@ class MPRouteStopIconConfig extends MapsIndoorsObject
     return {
       "numbered": numbered,
       "label": label,
-      "color": color,
+      "color": color.toRGBString(),
     };
   }
 }

@@ -129,11 +129,11 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
       DisplayRulePlatform.instance.setLabelStyleTextSize(id, max);
 
   /// Get the labelStyle's text color
-  Future<String?> getLabelStyleTextColor() =>
+  Future<Color?> getLabelStyleTextColor() =>
       DisplayRulePlatform.instance.getLabelStyleTextColor(id);
 
   /// Set the labelStyle's text color
-  Future<void> setLabelStyleTextColor(String color) =>
+  Future<void> setLabelStyleTextColor(Color color) =>
       DisplayRulePlatform.instance.setLabelStyleTextColor(id, color);
 
   /// Get the labelStyle's text opacity
@@ -145,11 +145,11 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
       DisplayRulePlatform.instance.setLabelStyleTextOpacity(id, opacity);
 
   /// Get the labelStyle's halo color
-  Future<String?> getLabelStyleHaloColor() =>
+  Future<Color?> getLabelStyleHaloColor() =>
       DisplayRulePlatform.instance.getLabelStyleHaloColor(id);
 
   /// Set the labelStyle's halo color
-  Future<void> setLabelStyleHaloColor(String color) =>
+  Future<void> setLabelStyleHaloColor(Color color) =>
       DisplayRulePlatform.instance.setLabelStyleHaloColor(id, color);
 
   /// Get the labelStyle's halo width
@@ -218,11 +218,11 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
       DisplayRulePlatform.instance.setPolygonStrokeWidth(id, width);
 
   /// Get the polygon's stroke color value
-  Future<String?> getPolygonStrokeColor() =>
+  Future<Color?> getPolygonStrokeColor() =>
       DisplayRulePlatform.instance.getPolygonStrokeColor(id);
 
   /// Set the polygon's stroke color value
-  Future<void> setPolygonStrokeColor(String color) =>
+  Future<void> setPolygonStrokeColor(Color color) =>
       DisplayRulePlatform.instance.setPolygonStrokeColor(id, color);
 
   /// Get the polygon's stroke opacity value
@@ -234,11 +234,11 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
       DisplayRulePlatform.instance.setPolygonStrokeOpacity(id, opacity);
 
   /// Get the polygon's fill color value
-  Future<String?> getPolygonFillColor() =>
+  Future<Color?> getPolygonFillColor() =>
       DisplayRulePlatform.instance.getPolygonFillColor(id);
 
   /// Set the polygon's fill color value
-  Future<void> setPolygonFillColor(String color) =>
+  Future<void> setPolygonFillColor(Color color) =>
       DisplayRulePlatform.instance.setPolygonFillColor(id, color);
 
   /// Get the polygon's fill opacity value
@@ -267,11 +267,11 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
       DisplayRulePlatform.instance.setWallVisible(id, visible);
 
   /// Get the wall's color value
-  Future<String?> getWallColor() =>
+  Future<Color?> getWallColor() =>
       DisplayRulePlatform.instance.getWallColor(id);
 
   /// Set the wall's color value
-  Future<void> setWallColor(String color) =>
+  Future<void> setWallColor(Color color) =>
       DisplayRulePlatform.instance.setWallColor(id, color);
 
   /// Get the wall's height value
@@ -316,11 +316,11 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
       DisplayRulePlatform.instance.setExtrusionVisible(id, visible);
 
   /// Get the extrusion's color value
-  Future<String?> getExtrusionColor() =>
+  Future<Color?> getExtrusionColor() =>
       DisplayRulePlatform.instance.getExtrusionColor(id);
 
   /// Set the extrusion's color value
-  Future<void> setExtrusionColor(String color) =>
+  Future<void> setExtrusionColor(Color color) =>
       DisplayRulePlatform.instance.setExtrusionColor(id, color);
 
   /// Get the extrusion's height value
@@ -510,19 +510,19 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
       DisplayRulePlatform.instance.setBadgeStrokeWidth(id, width);
 
   /// Get the badge's stroke color
-  Future<String?> getBadgeStrokeColor() =>
+  Future<Color?> getBadgeStrokeColor() =>
       DisplayRulePlatform.instance.getBadgeStrokeColor(id);
 
   /// Set the badge's stroke color
-  Future<void> setBadgeStrokeColor(String color) =>
+  Future<void> setBadgeStrokeColor(Color color) =>
       DisplayRulePlatform.instance.setBadgeStrokeColor(id, color);
 
   /// Get the badge's fill color
-  Future<String?> getBadgeFillColor() =>
+  Future<Color?> getBadgeFillColor() =>
       DisplayRulePlatform.instance.getBadgeFillColor(id);
 
   /// Set the badge's fill color
-  Future<void> setBadgeFillColor(String color) =>
+  Future<void> setBadgeFillColor(Color color) =>
       DisplayRulePlatform.instance.setBadgeFillColor(id, color);
 
   /// Get the badge's scale

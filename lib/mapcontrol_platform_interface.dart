@@ -77,7 +77,7 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   Future<void> animateCamera(MPCameraUpdate update, [int? duration]);
   Future<void> moveCamera(MPCameraUpdate update);
   Future<MPCameraPosition> currentCameraPosition();
-  Future<void> setLabelOptions(num? textSize, String? color, bool showHalo);
+  Future<void> setLabelOptions(num? textSize, Color? color, bool showHalo);
   Future<void> clearHighlight();
   Future<void> setHighlight(
       List<MPLocation> locations, MPHighlightBehavior behavior);

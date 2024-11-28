@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.0
+
+### Changed
+
+* Replaced all uses of color-strings with `dart:ui` `Color` instead
+
 ## 3.1.3
 
 * No changes

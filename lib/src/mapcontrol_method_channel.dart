@@ -446,9 +446,12 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   }
 
   @override
-  Future<void> setLabelOptions(num? textSize, String? color, bool showHalo) {
-    return mapControlMethodChannel.invokeMethod("MPC_setLabelOptions",
-        {"textSize": textSize?.round(), "color": color, "showHalo": showHalo});
+  Future<void> setLabelOptions(num? textSize, Color? color, bool showHalo) {
+    return mapControlMethodChannel.invokeMethod("MPC_setLabelOptions", {
+      "textSize": textSize?.round(),
+      "color": color?.toRGBString(),
+      "showHalo": showHalo
+    });
   }
 
   @override

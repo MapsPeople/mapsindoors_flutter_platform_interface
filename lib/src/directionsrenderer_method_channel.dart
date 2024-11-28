@@ -52,9 +52,11 @@ class MethodChannelDirectionsRenderer extends DirectionsRendererPlatform {
       });
 
   @override
-  Future<void> setPolyLineColors(String foreground, String background) =>
-      directionsRendererMethodChannel.invokeMethod('DRE_setPolyLineColors',
-          {"foreground": foreground, "background": background});
+  Future<void> setPolyLineColors(Color foreground, Color background) =>
+      directionsRendererMethodChannel.invokeMethod('DRE_setPolyLineColors', {
+        "foreground": foreground.toRGBString(),
+        "background": background.toRGBString()
+      });
 
   @override
   Future<void> selectLegIndex(int legIndex) => directionsRendererMethodChannel

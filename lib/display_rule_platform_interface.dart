@@ -51,12 +51,12 @@ abstract class DisplayRulePlatform extends PlatformInterface {
   // labelStyle
   Future<num?> getLabelStyleTextSize(MPDisplayRuleId id);
   Future<void> setLabelStyleTextSize(MPDisplayRuleId id, num size);
-  Future<String?> getLabelStyleTextColor(MPDisplayRuleId id);
-  Future<void> setLabelStyleTextColor(MPDisplayRuleId id, String color);
+  Future<Color?> getLabelStyleTextColor(MPDisplayRuleId id);
+  Future<void> setLabelStyleTextColor(MPDisplayRuleId id, Color color);
   Future<num?> getLabelStyleTextOpacity(MPDisplayRuleId id);
   Future<void> setLabelStyleTextOpacity(MPDisplayRuleId id, num opacity);
-  Future<String?> getLabelStyleHaloColor(MPDisplayRuleId id);
-  Future<void> setLabelStyleHaloColor(MPDisplayRuleId id, String color);
+  Future<Color?> getLabelStyleHaloColor(MPDisplayRuleId id);
+  Future<void> setLabelStyleHaloColor(MPDisplayRuleId id, Color color);
   Future<num?> getLabelStyleHaloWidth(MPDisplayRuleId id);
   Future<void> setLabelStyleHaloWidth(MPDisplayRuleId id, num width);
   Future<num?> getLabelStyleHaloBlur(MPDisplayRuleId id);
@@ -74,12 +74,12 @@ abstract class DisplayRulePlatform extends PlatformInterface {
   Future<void> setPolygonZoomTo(MPDisplayRuleId id, num to);
   Future<num?> getPolygonStrokeWidth(MPDisplayRuleId id);
   Future<void> setPolygonStrokeWidth(MPDisplayRuleId id, num width);
-  Future<String?> getPolygonStrokeColor(MPDisplayRuleId id);
-  Future<void> setPolygonStrokeColor(MPDisplayRuleId id, String color);
+  Future<Color?> getPolygonStrokeColor(MPDisplayRuleId id);
+  Future<void> setPolygonStrokeColor(MPDisplayRuleId id, Color color);
   Future<num?> getPolygonStrokeOpacity(MPDisplayRuleId id);
   Future<void> setPolygonStrokeOpacity(MPDisplayRuleId id, num opacity);
-  Future<String?> getPolygonFillColor(MPDisplayRuleId id);
-  Future<void> setPolygonFillColor(MPDisplayRuleId id, String color);
+  Future<Color?> getPolygonFillColor(MPDisplayRuleId id);
+  Future<void> setPolygonFillColor(MPDisplayRuleId id, Color color);
   Future<num?> getPolygonFillOpacity(MPDisplayRuleId id);
   Future<void> setPolygonFillOpacity(MPDisplayRuleId id, num opacity);
   Future<num?> getPolygonLightnessFactor(MPDisplayRuleId id);
@@ -87,8 +87,8 @@ abstract class DisplayRulePlatform extends PlatformInterface {
   // wall
   Future<bool?> isWallVisible(MPDisplayRuleId id);
   Future<void> setWallVisible(MPDisplayRuleId id, bool visible);
-  Future<String?> getWallColor(MPDisplayRuleId id);
-  Future<void> setWallColor(MPDisplayRuleId id, String color);
+  Future<Color?> getWallColor(MPDisplayRuleId id);
+  Future<void> setWallColor(MPDisplayRuleId id, Color color);
   Future<num?> getWallHeight(MPDisplayRuleId id);
   Future<void> setWallHeight(MPDisplayRuleId id, num height);
   Future<num?> getWallZoomFrom(MPDisplayRuleId id);
@@ -100,8 +100,8 @@ abstract class DisplayRulePlatform extends PlatformInterface {
   //extrusion
   Future<bool?> isExtrusionVisible(MPDisplayRuleId id);
   Future<void> setExtrusionVisible(MPDisplayRuleId id, bool visible);
-  Future<String?> getExtrusionColor(MPDisplayRuleId id);
-  Future<void> setExtrusionColor(MPDisplayRuleId id, String color);
+  Future<Color?> getExtrusionColor(MPDisplayRuleId id);
+  Future<void> setExtrusionColor(MPDisplayRuleId id, Color color);
   Future<num?> getExtrusionHeight(MPDisplayRuleId id);
   Future<void> setExtrusionHeight(MPDisplayRuleId id, num height);
   Future<num?> getExtrusionZoomFrom(MPDisplayRuleId id);
@@ -151,10 +151,10 @@ abstract class DisplayRulePlatform extends PlatformInterface {
   Future<void> setBadgeZoomTo(MPDisplayRuleId id, num to);
   Future<num?> getBadgeStrokeWidth(MPDisplayRuleId id);
   Future<void> setBadgeStrokeWidth(MPDisplayRuleId id, num width);
-  Future<String?> getBadgeStrokeColor(MPDisplayRuleId id);
-  Future<void> setBadgeStrokeColor(MPDisplayRuleId id, String color);
-  Future<String?> getBadgeFillColor(MPDisplayRuleId id);
-  Future<void> setBadgeFillColor(MPDisplayRuleId id, String color);
+  Future<Color?> getBadgeStrokeColor(MPDisplayRuleId id);
+  Future<void> setBadgeStrokeColor(MPDisplayRuleId id, Color color);
+  Future<Color?> getBadgeFillColor(MPDisplayRuleId id);
+  Future<void> setBadgeFillColor(MPDisplayRuleId id, Color color);
   Future<num?> getBadgeScale(MPDisplayRuleId id);
   Future<void> setBadgeScale(MPDisplayRuleId id, num scale);
   Future<num?> getBadgeRadius(MPDisplayRuleId id);

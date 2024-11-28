@@ -28,6 +28,39 @@ class DynamicObjectId {
   }
 }
 
+extension StringColorExtensions on String {
+  Color toColor() {
+    final value = _hexToInteger(substring(1));
+
+    if (Platform.isAndroid) {
+      // fetch from aRGB, this is built-in for Color
+      return Color(value);
+    } else {
+      // fetch from RGBa
+      final int red = (0xff000000 & value) >> 24;
+      final int green = (0x00ff0000 & value) >> 16;
+      final int blue = (0x0000ff00 & value) >> 8;
+      final int alpha = (0x000000ff & value) >> 0;
+      // parse to aRGB
+      return Color((alpha << 24) + (red << 16) + (green << 8) + (blue << 0));
+    }
+  }
+}
+
+int _hexToInteger(String hex) => int.parse(hex, radix: 16);
+
+extension ColorStringExtensions on Color {
+  String toRGBString() {
+    if (Platform.isAndroid) {
+      // aRGB for Android
+      return '#${((alpha << 24) + (red << 16) + (green << 8) + (blue << 0)).toRadixString(16).padLeft(8, '0')}';
+    } else {
+      // RGBa for iOS
+      return '#${((red << 24) + (green << 16) + (blue << 8) + (alpha << 0)).toRadixString(16).padLeft(8, '0')}';
+    }
+  }
+}
+
 abstract class DynamicObject<T extends DynamicObjectId> {
   const DynamicObject();
   T get id;

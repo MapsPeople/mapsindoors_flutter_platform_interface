@@ -35,7 +35,7 @@ abstract class DirectionsRendererPlatform extends PlatformInterface {
   Future<void> setOnLegSelectedListener(
       OnLegSelectedListener? onLegSelectedListener);
 
-  Future<void> setPolyLineColors(String foreground, String background);
+  Future<void> setPolyLineColors(Color foreground, Color background);
 
   Future<void> setRoute(
       MPRoute? route, Map<num, MPRouteStopIconConfigInterface>? stopIcons);

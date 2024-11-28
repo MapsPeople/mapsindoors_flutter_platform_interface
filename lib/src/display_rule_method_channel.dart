@@ -93,9 +93,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getPolygonFillColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getPolygonFillColor", {"id": id.value});
+  Future<Color?> getPolygonFillColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel
+            .invokeMethod<String>("DRU_getPolygonFillColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -111,9 +112,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getPolygonStrokeColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getPolygonStrokeColor", {"id": id.value});
+  Future<Color?> getPolygonStrokeColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel.invokeMethod<String>(
+            "DRU_getPolygonStrokeColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -261,9 +263,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setPolygonFillColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel.invokeMethod(
-        "DRU_setPolygonFillColor", {"id": id.value, "color": color});
+  Future<void> setPolygonFillColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setPolygonFillColor",
+        {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
@@ -273,9 +275,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setPolygonStrokeColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel.invokeMethod(
-        "DRU_setPolygonStrokeColor", {"id": id.value, "color": color});
+  Future<void> setPolygonStrokeColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setPolygonStrokeColor",
+        {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
@@ -321,9 +323,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getExtrusionColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getExtrusionColor", {"id": id.value});
+  Future<Color?> getExtrusionColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel
+            .invokeMethod<String>("DRU_getExtrusionColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -345,9 +348,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getWallColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getWallColor", {"id": id.value});
+  Future<Color?> getWallColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel
+            .invokeMethod<String>("DRU_getWallColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -381,9 +385,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setExtrusionColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel.invokeMethod(
-        "DRU_setExtrusionColor", {"id": id.value, "color": color});
+  Future<void> setExtrusionColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setExtrusionColor",
+        {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
@@ -411,9 +415,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setWallColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_setWallColor", {"id": id.value, "color": color});
+  Future<void> setWallColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod(
+        "DRU_setWallColor", {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
@@ -542,9 +546,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getBadgeFillColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getBadgeFillColor", {"id": id.value});
+  Future<Color?> getBadgeFillColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel
+            .invokeMethod<String>("DRU_getBadgeFillColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -567,9 +572,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getBadgeStrokeColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getBadgeStrokeColor", {"id": id.value});
+  Future<Color?> getBadgeStrokeColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel
+            .invokeMethod<String>("DRU_getBadgeStrokeColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -616,9 +622,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getLabelStyleHaloColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getLabelStyleHaloColor", {"id": id.value});
+  Future<Color?> getLabelStyleHaloColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel.invokeMethod<String>(
+            "DRU_getLabelStyleHaloColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -628,9 +635,10 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<String?> getLabelStyleTextColor(MPDisplayRuleId id) {
-    return displayRuleMethodChannel
-        .invokeMethod("DRU_getLabelStyleTextColor", {"id": id.value});
+  Future<Color?> getLabelStyleTextColor(MPDisplayRuleId id) async {
+    return (await displayRuleMethodChannel.invokeMethod<String>(
+            "DRU_getLabelStyleTextColor", {"id": id.value}))
+        ?.toColor();
   }
 
   @override
@@ -671,9 +679,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setBadgeFillColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel.invokeMethod(
-        "DRU_setBadgeFillColor", {"id": id.value, "color": color});
+  Future<void> setBadgeFillColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setBadgeFillColor",
+        {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
@@ -695,9 +703,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setBadgeStrokeColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel.invokeMethod(
-        "DRU_setBadgeStrokeColor", {"id": id.value, "color": color});
+  Future<void> setBadgeStrokeColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setBadgeStrokeColor",
+        {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
@@ -749,9 +757,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setLabelStyleHaloColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel.invokeMethod(
-        "DRU_setLabelStyleHaloColor", {"id": id.value, "color": color});
+  Future<void> setLabelStyleHaloColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setLabelStyleHaloColor",
+        {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
@@ -761,9 +769,9 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
   }
 
   @override
-  Future<void> setLabelStyleTextColor(MPDisplayRuleId id, String color) {
-    return displayRuleMethodChannel.invokeMethod(
-        "DRU_setLabelStyleTextColor", {"id": id.value, "color": color});
+  Future<void> setLabelStyleTextColor(MPDisplayRuleId id, Color color) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setLabelStyleTextColor",
+        {"id": id.value, "color": color.toRGBString()});
   }
 
   @override
