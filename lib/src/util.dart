@@ -49,6 +49,8 @@ extension StringColorExtensions on String {
 
 int _hexToInteger(String hex) => int.parse(hex, radix: 16);
 
+// ignore_for_file: deprecated_member_use
+
 extension ColorStringExtensions on Color {
   String toRGBString() {
     if (Platform.isAndroid) {
