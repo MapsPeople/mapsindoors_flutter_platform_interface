@@ -45,11 +45,16 @@ class MPRoute extends MapsIndoorsObject {
   MPRoute._fromJson(data)
       : copyrights = data["copyrights"],
         summary = data["summary"],
-        warnings = convertJsonArray<String>(data["warnings"]),
-        restrictions = convertJsonArray<String>(data["restrictions"]),
+        warnings = data["warnings"] is List
+            ? convertJsonArray<String>(data["warnings"])
+            : [],
+        restrictions = data["restrictions"] is List
+            ? convertJsonArray<String>(data["restrictions"])
+            : [],
         bounds = null,
-        orderedStopIndexes =
-            convertJsonArray<int>(data["ordered_stop_indexes"] ?? []),
+        orderedStopIndexes = data["ordered_stop_indexes"] is List
+            ? convertJsonArray<int>(data["ordered_stop_indexes"])
+            : [],
         legs = _convertLegs(data["legs"]);
 
   static List<MPRouteLeg>? _convertLegs(dynamic data) {
