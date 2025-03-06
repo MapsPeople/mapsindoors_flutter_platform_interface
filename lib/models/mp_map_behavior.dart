@@ -50,7 +50,9 @@ class MPFilterBehavior extends MapsIndoorsObject {
       "moveCamera": moveCamera,
       "animationDuration": animationDuration,
       "showInfoWindow": showInfoWindow,
-      "zoomToFit": zoomToFit
+      "zoomToFit": zoomToFit,
+      // TODO: Must be set to actual value when upgrading to Android SDK > 4.11.0 that has this
+      "maxZoom": 999
     };
   }
 }
@@ -102,7 +104,9 @@ class MPSelectionBehavior extends MapsIndoorsObject {
       "moveCamera": moveCamera,
       "animationDuration": animationDuration,
       "showInfoWindow": showInfoWindow,
-      "zoomToFit": zoomToFit
+      "zoomToFit": zoomToFit,
+      // TODO: Must be set to actual value when upgrading to Android SDK > 4.11.0 that has this
+      "maxZoom": 999
     };
   }
 }
@@ -154,7 +158,9 @@ class MPHighlightBehavior extends MapsIndoorsObject {
       "moveCamera": moveCamera,
       "animationDuration": animationDuration,
       "zoomToFit": zoomToFit,
-      "showInfoWindow": showInfoWindow
+      "showInfoWindow": showInfoWindow,
+      // TODO: Must be set to actual value when upgrading to Android SDK > 4.11.0 that has this
+      "maxZoom": 999
     };
   }
 }
