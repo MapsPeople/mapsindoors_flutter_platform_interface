@@ -52,6 +52,7 @@ part 'models/enums/mp_label_type.dart';
 part 'models/enums/mp_icon_placement.dart';
 part 'models/enums/mp_venue_status.dart';
 part 'models/enums/mp_selection_mode.dart';
+part 'models/enums/mp_label_position.dart';
 
 part 'models/listeners/mp_camera_event_listener.dart';
 part 'models/listeners/on_building_found_at_camera_target_listener.dart';

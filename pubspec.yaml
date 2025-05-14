@@ -1,6 +1,6 @@
 name: mapsindoors_platform_interface
 description: A common platform interface for the mapsindoors plugin.
-version: 4.1.6
+version: 4.2.0
 repository: https://github.com/MapsPeople/mapsindoors_flutter_platform_interface
 homepage: https://www.mapsindoors.com/
 

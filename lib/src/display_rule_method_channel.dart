@@ -817,4 +817,18 @@ class MethodChannelDisplayRule extends DisplayRulePlatform {
     return displayRuleMethodChannel.invokeMethod("DRU_setLabelStyleGraphic",
         {"id": id.value, "graphic": graphic._jsonEncode()});
   }
+
+  @override
+  Future<MPLabelPosition?> getLabelStylePosition(MPDisplayRuleId id) async {
+    final ret = await displayRuleMethodChannel
+        .invokeMethod("DRU_getLabelStylePosition", {"id": id.value});
+    return MPLabelPosition.values[ret];
+  }
+
+  @override
+  Future<void> setLabelStylePosition(
+      MPDisplayRuleId id, MPLabelPosition position) {
+    return displayRuleMethodChannel.invokeMethod("DRU_setLabelStylePosition",
+        {"id": id.value, "position": position.index});
+  }
 }

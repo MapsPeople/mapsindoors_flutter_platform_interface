@@ -549,6 +549,12 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   Future<void> setBadgePosition(MPBadgePosition position) =>
       DisplayRulePlatform.instance.setBadgePosition(id, position);
 
+  Future<MPLabelPosition?> getLabelStylePosition() =>
+      DisplayRulePlatform.instance.getLabelStylePosition(id);
+
+  Future<void> setLabelStylePosition(MPLabelPosition position) =>
+      DisplayRulePlatform.instance.setLabelStylePosition(id, position);
+
   Future<void> reset() => DisplayRulePlatform.instance.reset(id);
 
   @override

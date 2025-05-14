@@ -65,6 +65,9 @@ abstract class DisplayRulePlatform extends PlatformInterface {
   Future<void> setLabelStyleBearing(MPDisplayRuleId id, num bearing);
   Future<MPLabelGraphic?> getLabelStyleGraphic(MPDisplayRuleId id);
   Future<void> setLabelStyleGraphic(MPDisplayRuleId id, MPLabelGraphic graphic);
+  Future<MPLabelPosition?> getLabelStylePosition(MPDisplayRuleId id);
+  Future<void> setLabelStylePosition(
+      MPDisplayRuleId id, MPLabelPosition position);
   // polygon
   Future<bool?> isPolygonVisible(MPDisplayRuleId id);
   Future<void> setPolygonVisible(MPDisplayRuleId id, bool visible);

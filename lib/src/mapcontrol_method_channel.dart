@@ -109,8 +109,10 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   Future<dynamic> _floorSelectorHandler(MethodCall call) async {
     switch (call.method) {
       case "setList":
-        final floors = convertMIList<MPFloor>(
-            jsonDecode(call.arguments), (p0) => MPFloor.fromJson(p0));
+        final floors = call.arguments == null
+            ? null
+            : convertMIList<MPFloor>(
+                jsonDecode(call.arguments), (p0) => MPFloor.fromJson(p0));
         _floorSelector?.floors = floors;
         break;
       case "show":
