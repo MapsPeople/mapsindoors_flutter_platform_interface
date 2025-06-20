@@ -23,10 +23,27 @@ class MPRouteStep extends MapsIndoorsObject {
   /// Some [abutters] set on the step
   final String? abutters;
 
-  /// The step [maneuver] embedded in HTML
+  /// Textual instructions for the step [maneuver]. May not be specified
   final String? htmlInstructions;
 
-  /// The steps' [maneuver], eg. "Straight", "Turn lef"
+  /// The maneuver for the step, if any.
+  ///
+  /// This is a string that describes the maneuver to be performed at this step, such as "turn-left" or "uturn-right".
+  /// It may be [null] if no specific maneuver is associated with this step.
+  ///
+  /// Possible values include:
+  /// <ul>
+  ///   <li>"straight"</li>
+  ///   <li>"turn-left"</li>
+  ///   <li>"turn-right"</li>
+  ///   <li>"turn-sharp-left"</li>
+  ///   <li>"turn-sharp-right"</li>
+  ///   <li>"turn-slight-left"</li>
+  ///   <li>"turn-slight-right"</li>
+  ///   <li>"uturn-left"</li>
+  ///   <li>"uturn-right"</li>
+  /// </ul>
+  ///
   final String? maneuver;
 
   /// How the step is traversed
