@@ -60,6 +60,7 @@ abstract class MapsindoorsPlatform extends PlatformInterface {
   Future<MPUserRoleCollection?> getUserRoles();
   Future<List<MPUserRole>?> getAppliedUserRoles();
   Future<void> applyUserRoles(List<MPUserRole> userRoles);
+  Future<void> enableDebugLogging(bool enable);
   //endregion
 
   //region Display Rules

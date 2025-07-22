@@ -314,4 +314,10 @@ class MethodChannelMapsindoors extends MapsindoorsPlatform {
     return mapsIndoorsMethodChannel.invokeMethod(
         "MIN_removeVenuesToSync", {"venueIds": jsonEncode(venueIds)});
   }
+
+  @override
+  Future<void> enableDebugLogging(bool enable) {
+    return mapsIndoorsMethodChannel
+        .invokeMethod("MIN_enableDebugLogging", {"enable": enable});
+  }
 }
