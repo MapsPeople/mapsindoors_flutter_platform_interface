@@ -39,7 +39,7 @@ part 'models/entities/mp_floor.dart';
 part 'models/entities/mp_location.dart';
 
 part 'models/enums/mp_collision_handling.dart';
-part 'models/enums/mp_location_propery_names.dart';
+part 'models/enums/mp_location_property_names.dart';
 part 'models/enums/mp_location_type.dart';
 part 'models/enums/mp_solution_display_rule.dart';
 part 'models/enums/mp_camera_event.dart';
