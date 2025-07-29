@@ -47,7 +47,7 @@ class MethodChannelDirectionsService extends DirectionsServicePlatform {
     } else {
       return Future.error(MPError(
           code: MPError.unknownError,
-          message: "Did not receieve route object from Platform"));
+          message: "Did not receive route object from Platform"));
     }
   }
 
