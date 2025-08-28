@@ -13,6 +13,7 @@ class MPSolutionConfig {
   late MPCollisionHandling? _collisionHandling;
   late bool? _enableClustering;
   late MPLocationSettings? _locationSettings;
+  late num? _automatedZoomLimit;
 
   /// Attempts to build a [MPSolutionConfig] from a JSON object, this method will decode the object if needed
   static MPSolutionConfig? fromJson(json) => json != null && json != "null"
@@ -23,7 +24,8 @@ class MPSolutionConfig {
       : settings3D = MPSettings3D.fromJson(data["settings3D"])!,
         _enableClustering = data["enableClustering"],
         _locationSettings =
-            MPLocationSettings.fromJson(data["locationSettings"]) {
+            MPLocationSettings.fromJson(data["locationSettings"]),
+        _automatedZoomLimit = data["automatedZoomLimit"] {
     if (data["collisionHandling"] is int) {
       _collisionHandling =
           MPCollisionHandling.fromValue(data["collisionHandling"]);
@@ -61,5 +63,14 @@ class MPSolutionConfig {
     _locationSettings?.selectable = selectable;
     _locationSettings ??= MPLocationSettings(selectable: selectable);
     UtilPlatform.instance.setLocationSettings(_locationSettings!);
+  }
+
+  /// Get the automated zoom limit
+  num? get automatedZoomLimit => _automatedZoomLimit;
+
+  /// Set the automated zoom limit
+  set automatedZoomLimit(num? limit) {
+    _automatedZoomLimit = limit;
+    UtilPlatform.instance.setAutomatedZoomLimit(limit);
   }
 }

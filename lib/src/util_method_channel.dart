@@ -91,4 +91,10 @@ class MethodChannelUtil extends UtilPlatform {
         "UTL_setTypeLocationSettingsSelectable",
         {"name": name, "settings": settings._jsonEncode()});
   }
+
+  @override
+  Future<void> setAutomatedZoomLimit(num? limit) {
+    return utilMethodChannel
+        .invokeMethod("UTL_setAutomatedZoomLimit", {"limit": limit});
+  }
 }

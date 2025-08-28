@@ -19,7 +19,7 @@ class MPFilterBehavior extends MapsIndoorsObject {
   ///
   /// ZoomToFit = true
   static const MPFilterBehavior DEFAULT =
-      MPFilterBehavior._(false, false, 0, false, true);
+      MPFilterBehavior._(false, false, 0, false, true, 999);
 
   /// Get a builder object
   static MPFilterBehaviorBuilder builder() => MPFilterBehaviorBuilder();
@@ -39,8 +39,16 @@ class MPFilterBehavior extends MapsIndoorsObject {
   /// Whether the filtering is allowed to zoom in/out the camera
   final bool zoomToFit;
 
-  const MPFilterBehavior._(this.allowFloorChange, this.moveCamera,
-      this.animationDuration, this.showInfoWindow, this.zoomToFit);
+  /// The max zoom level the camera can me moved to when the behavior is applied.
+  final num maxZoom;
+
+  const MPFilterBehavior._(
+      this.allowFloorChange,
+      this.moveCamera,
+      this.animationDuration,
+      this.showInfoWindow,
+      this.zoomToFit,
+      this.maxZoom);
 
   /// Converts the [MPFilterBehavior] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override
@@ -51,8 +59,7 @@ class MPFilterBehavior extends MapsIndoorsObject {
       "animationDuration": animationDuration,
       "showInfoWindow": showInfoWindow,
       "zoomToFit": zoomToFit,
-      // TODO: Must be set to actual value when upgrading to Android SDK > 4.11.0 that has this
-      "maxZoom": 999
+      "maxZoom": maxZoom
     };
   }
 }
@@ -73,7 +80,7 @@ class MPSelectionBehavior extends MapsIndoorsObject {
   ///
   /// Zoom to fit = true
   static const MPSelectionBehavior DEFAULT =
-      MPSelectionBehavior._(true, true, 500, true, true);
+      MPSelectionBehavior._(true, true, 500, true, true, 999);
 
   /// Get a builder object
   static MPSelectionBehaviorBuilder builder() => MPSelectionBehaviorBuilder();
@@ -93,8 +100,16 @@ class MPSelectionBehavior extends MapsIndoorsObject {
   /// Whether the selection is allowed to zoom in/out the camera
   final bool zoomToFit;
 
-  const MPSelectionBehavior._(this.allowFloorChange, this.moveCamera,
-      this.animationDuration, this.showInfoWindow, this.zoomToFit);
+  /// The max zoom level the camera can me moved to when the behavior is applied.
+  final num maxZoom;
+
+  const MPSelectionBehavior._(
+      this.allowFloorChange,
+      this.moveCamera,
+      this.animationDuration,
+      this.showInfoWindow,
+      this.zoomToFit,
+      this.maxZoom);
 
   /// Converts the [MPSelectionBehavior] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override
@@ -105,8 +120,7 @@ class MPSelectionBehavior extends MapsIndoorsObject {
       "animationDuration": animationDuration,
       "showInfoWindow": showInfoWindow,
       "zoomToFit": zoomToFit,
-      // TODO: Must be set to actual value when upgrading to Android SDK > 4.11.0 that has this
-      "maxZoom": 999
+      "maxZoom": maxZoom
     };
   }
 }
@@ -127,7 +141,7 @@ class MPHighlightBehavior extends MapsIndoorsObject {
   ///
   /// Zoom to fit = true
   static const MPHighlightBehavior DEFAULT =
-      MPHighlightBehavior._(false, false, 0, false, true);
+      MPHighlightBehavior._(false, false, 0, false, true, 999);
 
   /// Get a builder object
   static MPHighlightBehaviorBuilder builder() => MPHighlightBehaviorBuilder();
@@ -147,8 +161,16 @@ class MPHighlightBehavior extends MapsIndoorsObject {
   /// True if the info window is shown
   final bool showInfoWindow;
 
-  const MPHighlightBehavior._(this.allowFloorChange, this.moveCamera,
-      this.animationDuration, this.showInfoWindow, this.zoomToFit);
+  /// The max zoom level the camera can me moved to when the behavior is applied.
+  final num maxZoom;
+
+  const MPHighlightBehavior._(
+      this.allowFloorChange,
+      this.moveCamera,
+      this.animationDuration,
+      this.showInfoWindow,
+      this.zoomToFit,
+      this.maxZoom);
 
   /// Converts the [MPHighlightBehavior] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override
@@ -159,8 +181,7 @@ class MPHighlightBehavior extends MapsIndoorsObject {
       "animationDuration": animationDuration,
       "zoomToFit": zoomToFit,
       "showInfoWindow": showInfoWindow,
-      // TODO: Must be set to actual value when upgrading to Android SDK > 4.11.0 that has this
-      "maxZoom": 999
+      "maxZoom": maxZoom
     };
   }
 }
@@ -172,6 +193,7 @@ abstract class Builder<T> {
   int? _animationDuration;
   bool? _showInfoWindow;
   bool? _zoomToFit;
+  num? _maxZoom;
 
   /// Set whether the filtering is [allow]ed to change the floor if no results are visible on the current floor
   void setAllowFloorChange(bool allow) {
@@ -198,6 +220,11 @@ abstract class Builder<T> {
     _zoomToFit = doFit;
   }
 
+  /// Set the max zoom level the camera can me moved to when the behavior is applied.
+  void setMaxZoom(num zoom) {
+    _maxZoom = zoom;
+  }
+
   /// Build the behavior object
   T build();
 }
@@ -211,7 +238,8 @@ class MPFilterBehaviorBuilder extends Builder<MPFilterBehavior> {
         _moveCamera ?? MPFilterBehavior.DEFAULT.moveCamera,
         _animationDuration ?? MPFilterBehavior.DEFAULT.animationDuration,
         _showInfoWindow ?? MPFilterBehavior.DEFAULT.showInfoWindow,
-        _zoomToFit ?? MPFilterBehavior.DEFAULT.zoomToFit);
+        _zoomToFit ?? MPFilterBehavior.DEFAULT.zoomToFit,
+        _maxZoom ?? MPFilterBehavior.DEFAULT.maxZoom);
   }
 }
 
@@ -224,7 +252,8 @@ class MPSelectionBehaviorBuilder extends Builder<MPSelectionBehavior> {
         _moveCamera ?? MPSelectionBehavior.DEFAULT.moveCamera,
         _animationDuration ?? MPSelectionBehavior.DEFAULT.animationDuration,
         _showInfoWindow ?? MPSelectionBehavior.DEFAULT.showInfoWindow,
-        _zoomToFit ?? MPSelectionBehavior.DEFAULT.zoomToFit);
+        _zoomToFit ?? MPSelectionBehavior.DEFAULT.zoomToFit,
+        _maxZoom ?? MPSelectionBehavior.DEFAULT.maxZoom);
   }
 }
 
@@ -235,7 +264,8 @@ class MPHighlightBehaviorBuilder extends Builder<MPHighlightBehavior> {
         _allowFloorChange ?? MPHighlightBehavior.DEFAULT.allowFloorChange,
         _moveCamera ?? MPHighlightBehavior.DEFAULT.moveCamera,
         _animationDuration ?? MPHighlightBehavior.DEFAULT.animationDuration,
-        _showInfoWindow ?? MPSelectionBehavior.DEFAULT.showInfoWindow,
-        _zoomToFit ?? MPSelectionBehavior.DEFAULT.zoomToFit);
+        _showInfoWindow ?? MPHighlightBehavior.DEFAULT.showInfoWindow,
+        _zoomToFit ?? MPHighlightBehavior.DEFAULT.zoomToFit,
+        _maxZoom ?? MPHighlightBehavior.DEFAULT.maxZoom);
   }
 }

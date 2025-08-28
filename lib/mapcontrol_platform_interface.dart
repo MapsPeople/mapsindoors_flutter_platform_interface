@@ -41,7 +41,7 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   Future<bool?> isFloorSelectorHidden();
   Future<void> deSelectLocation();
   Future<void> selectFloor(int floorIndex);
-  Future<void> goTo(MPEntity? entity);
+  Future<void> goTo(MPEntity? entity, [double? maxZoom]);
   Future<void> selectLocation(
       MPLocation? location, MPSelectionBehavior behavior);
   Future<void> selectLocationById(String id, MPSelectionBehavior behavior);

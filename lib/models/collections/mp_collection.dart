@@ -5,7 +5,7 @@ class MPCollection<T> {
   late Map<String, T> _map;
 
   MPCollection._() {
-    this._map = <String, T>{};
+    _map = <String, T>{};
   }
 
   /// Fetch all elements from this collection as a list

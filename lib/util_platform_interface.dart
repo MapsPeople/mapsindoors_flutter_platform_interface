@@ -41,6 +41,7 @@ abstract class UtilPlatform extends PlatformInterface {
   Future<void> setLocationSettings(MPLocationSettings settings);
   Future<void> setExtrusionOpacity(num opacity);
   Future<void> setWallOpacity(num opacity);
+  Future<void> setAutomatedZoomLimit(num? limit);
   //endregion
 
   //region type

@@ -236,10 +236,11 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   }
 
   @override
-  Future<void> goTo(MPEntity? entity) {
+  Future<void> goTo(MPEntity? entity, [double? maxZoom]) {
     return mapControlMethodChannel.invokeMethod("MPC_goTo", {
       "entity": entity?._jsonEncode(),
-      "type": entity?.runtimeType.toString()
+      "type": entity?.runtimeType.toString(),
+      if (maxZoom != null) "maxZoom": maxZoom,
     });
   }
 
