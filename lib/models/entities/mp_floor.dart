@@ -62,7 +62,8 @@ class MPFloor extends MPEntity<MPFloorId> implements Comparable<MPFloor> {
 
   /// Get the floor's [position], this is usually the center of the floor's [geometry]
   @override
-  MPPoint get position => _geometry!.bounds.center;
+  MPPoint get position =>
+      bounds?.center ?? MPPoint.withCoordinates(latitude: 0, longitude: 0);
 
   /// Converts the [MPFloor] to a JSON representation that can be parsed by the MapsIndoors Platform SDK
   @override

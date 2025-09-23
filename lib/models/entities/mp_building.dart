@@ -61,19 +61,22 @@ class MPBuilding extends MPEntity<MPBuildingId> {
   String get buildingId => id.value;
 
   /// Get the building's [name]
-  String get name => _buildingInfo!.name;
+  String get name => _buildingInfo?.name ?? "";
 
   /// Get the building's [address]
   String get address => _address ?? "";
 
   /// Get a list of [aliases] for the building
-  List<String> get aliases => _buildingInfo!.aliases!;
+  List<String> get aliases => _buildingInfo?.aliases ?? [];
 
   /// Get the number of [MPFloor]s in the building
-  int get floorCount => _floors!.length;
+  int get floorCount => _floors?.length ?? 0;
 
   /// Get a list of the floors in the building
   List<MPFloor> get floors {
+    if (_floors == null) {
+      return [];
+    }
     List<MPFloor> list = List.from(_floors!.values);
     list.sort((a, b) => a.compareTo(b));
     return list;
@@ -83,7 +86,8 @@ class MPBuilding extends MPEntity<MPBuildingId> {
   int get initialFloorIndex => _defaultFloor ?? floors.first._floorIndex ?? 0;
 
   /// Check whether the building contains a floor with the [floorIndex]
-  bool hasFloorIndex(int floorIndex) => _floors!.containsKey(floorIndex);
+  bool hasFloorIndex(int floorIndex) =>
+      _floors?.containsKey(floorIndex) ?? false;
 
   /// Fetch a floor by providing its [floorIndex]
   MPFloor? getFloorByIndex(int floorIndex) => _floors?[floorIndex];

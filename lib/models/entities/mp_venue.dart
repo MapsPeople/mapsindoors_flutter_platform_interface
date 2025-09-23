@@ -93,7 +93,7 @@ class MPVenue extends MPEntity<MPVenueId> {
     if (_mapStyles == null) {
       return false;
     }
-    for (var style in _mapStyles!) {
+    for (var style in _mapStyles ?? []) {
       if (style == mapstyle) {
         return true;
       }

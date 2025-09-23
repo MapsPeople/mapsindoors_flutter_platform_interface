@@ -136,7 +136,7 @@ class MPLocation extends MPEntity<MPLocationId> {
   //MPGeometry get geometry => _geometry!;
 
   /// Get the location's [name]
-  String get name => _properties!.name;
+  String get name => _properties?.name ?? "";
 
   /// Get a list of [aliases] for the location
   List<String>? get aliases => _properties?.aliases;
@@ -148,7 +148,9 @@ class MPLocation extends MPEntity<MPLocationId> {
   }
 
   /// Get the location's [floorIndex]
-  int get floorIndex => _properties!.floorIndex!;
+  int get floorIndex =>
+      _properties?.floorIndex ??
+      2147483647; // 32-bit int max value is used as error code for missing floor index
 
   /// Get the name of the [MPFloor] the location is on
   String? get floorName => _properties?.floorName;
@@ -166,7 +168,7 @@ class MPLocation extends MPEntity<MPLocationId> {
   String? get description => _properties?.description;
 
   /// Get the location's external id
-  String get externalId => _properties!.externalId!;
+  String get externalId => _properties?.externalId ?? "";
 
   /// Get the time (epoch) the location is active from
   int? get activeFrom => _properties?.activeFrom;
