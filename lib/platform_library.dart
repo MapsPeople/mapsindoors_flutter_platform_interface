@@ -111,3 +111,9 @@ part 'models/collections/mp_building_collection.dart';
 part 'models/collections/mp_category_collection.dart';
 part 'models/collections/mp_user_role_collection.dart';
 part 'models/collections/mp_venue_collection.dart';
+
+part 'models/details/mp_additional_detail.dart';
+part 'models/details/mp_opening_hours.dart';
+part 'models/details/mp_daily_opening_hours.dart';
+part 'models/details/mp_weekly_opening_hours.dart';
+part 'models/details/mp_detail_type.dart';

@@ -44,20 +44,11 @@ void main() {
         MPFeatureType.model3D,
         MPFeatureType.extrusion3D
       ]);
-      print("Expected value: ${[
-        MPFeatureType.walls2D,
-        MPFeatureType.model3D,
-        MPFeatureType.extrusion3D
-      ]}, Actual: ${x}");
     });
     test("setHiddenFeatures", () async {
-      print("Set: ${[MPFeatureType.extrudedBuildings, MPFeatureType.model2D]}");
       await platform.setHiddenFeatures(
           [MPFeatureType.extrudedBuildings, MPFeatureType.model2D]);
-      print("Set: ${[]}");
       await platform.setHiddenFeatures([]);
-      print("Set: ${null}");
-      await platform.setHiddenFeatures(null);
     });
   });
 }

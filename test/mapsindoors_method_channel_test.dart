@@ -49,9 +49,7 @@ void main() {
             var x = convertMIList(
                 jsonDecode(call.arguments["userRoles"]), MPUserRole.fromJson);
             expect(x, isNotNull);
-            print("Expected value: 1, Actual: ${x.length}");
             expect(x.length, 1);
-            print("Expected value: afaik, Actual: ${x[0].id}");
             expect(x[0].id, "afaik");
             break;
           }
@@ -234,7 +232,6 @@ void main() {
       switch (call.method) {
         case "MIL_onMapsIndoorsReadyListener":
           {
-            print("AddListener: " + call.arguments["addListener"].toString());
             break;
           }
         case "MIL_onPositionUpdate":
@@ -250,9 +247,7 @@ void main() {
 
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: STR, Actual: ${x!.message}");
-      expect(x.message, "STR");
-      print("Expected value: 120, Actual: ${x.code}");
+      expect(x!.message, "STR");
       expect(x.code, 120);
     });
 
@@ -261,9 +256,7 @@ void main() {
 
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: SYNCHRONIZE, Actual: ${x!.message}");
-      expect(x.message, "SYNCHRONIZE");
-      print("Expected value: 35, Actual: ${x.code}");
+      expect(x!.message, "SYNCHRONIZE");
       expect(x.code, 35);
     });
 
@@ -272,8 +265,7 @@ void main() {
 
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: true, Actual: $x");
-      expect(x, true);
+      expect(x!, true);
     });
 
     test("isReady", () async {
@@ -281,8 +273,7 @@ void main() {
 
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: false, Actual: $x");
-      expect(x, false);
+      expect(x!, false);
     });
 
     test("destroy", () async {
@@ -290,9 +281,7 @@ void main() {
     });
 
     test("MapsIndoorsReadyListener", () {
-      OnMapsIndoorsReadyListener x = (error) {
-        print("Listener");
-      };
+      OnMapsIndoorsReadyListener x = (error) {};
       platform.addOnMapsIndoorsReadyListener(x);
 
       platform.removeOnMapsIndoorsReadyListener(x);
@@ -305,8 +294,7 @@ void main() {
 
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: test, Actual: $x");
-      expect(x, "test");
+      expect(x!, "test");
     });
 
     test("isAPIKeyValid", () async {
@@ -314,8 +302,7 @@ void main() {
 
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: true, Actual: $x");
-      expect(x, true);
+      expect(x!, true);
     });
   });
 
@@ -324,29 +311,25 @@ void main() {
       var x = await platform.getAvailableLanguages();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: [\"da\", \"en\"], Actual: $x");
-      expect(x, ["da", "en"]);
+      expect(x!, ["da", "en"]);
     });
     test("getDefaultLanguage", () async {
       var x = await platform.getDefaultLanguage();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: da, Actual: $x");
-      expect(x, "da");
+      expect(x!, "da");
     });
     test("getLanguage", () async {
       var x = await platform.getLanguage();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: en, Actual: $x");
-      expect(x, "en");
+      expect(x!, "en");
     });
     test("setLanguage", () async {
       var x = await platform.setLanguage("language");
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: true, Actual: $x");
-      expect(x, true);
+      expect(x!, true);
     });
   });
 
@@ -366,7 +349,7 @@ void main() {
 
       x = platform.getPositionProvider();
 
-      expect(x, isNotNull, reason: "Expected value null");
+      expect(x!, isNotNull, reason: "Expected value null");
 
       expect(x, y);
     });
@@ -381,7 +364,6 @@ void main() {
       var x = await platform.displayRuleNameExists("test");
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: true, Actual: $x");
       expect(x, true);
     });
     test("locationDisplayRuleExists", () async {
@@ -389,7 +371,6 @@ void main() {
           await platform.locationDisplayRuleExists(MPLocationId("location"));
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: true, Actual: $x");
       expect(x, true);
     });
   });
@@ -403,22 +384,16 @@ void main() {
       var x = await platform.getAppliedUserRoles();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 1, Actual: ${x!.length}");
-      expect(x.length, 1);
-      print("Expected value: 123, Actual: ${x[0].id}");
+      expect(x!.length, 1);
       expect(x[0].id, "123");
-      print("Expected value: userrole, Actual: ${x[0].name}");
       expect(x[0].name, "userrole");
     });
     test("getUserRoles", () async {
       var x = await platform.getUserRoles();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 1, Actual: ${x!.size}");
-      expect(x.size, 1);
-      print("Expected value: 123, Actual: ${x.getAll()[0].id}");
+      expect(x!.size, 1);
       expect(x.getAll()[0].id, "123");
-      print("Expected value: userrole, Actual: ${x.getAll()[0].name}");
       expect(x.getAll()[0].name, "userrole");
     });
   });
@@ -428,83 +403,64 @@ void main() {
       var x = await platform.getSolution();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: solutionId, Actual: ${x!.id}");
-      expect(x.id, "solutionId");
+      expect(x!.id, "solutionId");
     });
     test("getCategories", () async {
       var x = await platform.getCategories();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 2, Actual: ${x!.size}");
-      expect(x.size, 2);
+      expect(x!.size, 2);
 
-      print("Expected value: key1, Actual: ${x.getAll()[0].key}");
       expect(x.getAll()[0].key, "key1");
-      print("Expected value: key2, Actual: ${x.getAll()[1].key}");
       expect(x.getAll()[1].key, "key2");
     });
     test("getVenues", () async {
       var x = await platform.getVenues();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 1, Actual: ${x!.size}");
-      expect(x.size, 1);
+      expect(x!.size, 1);
 
-      print("Expected value: id1, Actual: ${x.getAll()[0].id.value}");
       expect(x.getAll()[0].id.value, "id1");
-      print("Expected value: 0, Actual: ${x.getAll()[0].defaultFloor}");
       expect(x.getAll()[0].defaultFloor, 0);
     });
     test("getDefaultVenue", () async {
       var x = await platform.getDefaultVenue();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: id1, Actual: ${x!.id.value}");
-      expect(x.id.value, "id1");
-      print("Expected value: 0, Actual: ${x.defaultFloor}");
+      expect(x!.id.value, "id1");
       expect(x.defaultFloor, 0);
     });
     test("getBuildings", () async {
       var x = await platform.getBuildings();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 1, Actual: ${x!.size}");
-      expect(x.size, 1);
+      expect(x!.size, 1);
 
-      print("Expected value: id1, Actual: ${x.getAll()[0].id.value}");
       expect(x.getAll()[0].id.value, "id1");
-      print("Expected value: venue1, Actual: ${x.getAll()[0].venueId}");
       expect(x.getAll()[0].venueId, "venue1");
     });
     test("getLocationById", () async {
       var x = await platform.getLocationById("id");
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: id, Actual: ${x!.id.value}");
-      expect(x.id.value, "id");
+      expect(x!.id.value, "id");
     });
     test("getLocations", () async {
       var x = await platform.getLocations();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 2, Actual: ${x!.length}");
-      expect(x.length, 2);
+      expect(x!.length, 2);
 
-      print("Expected value: id1, Actual: ${x[0].id.value}");
       expect(x[0].id.value, "id1");
-      print("Expected value: id2, Actual: ${x[1].id.value}");
       expect(x[1].id.value, "id2");
     });
     test("getLocationsByExternalIds", () async {
       var x = await platform.getLocationsByExternalIds(["eid1", "eid2"]);
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 2, Actual: ${x!.length}");
-      expect(x.length, 2);
+      expect(x!.length, 2);
 
-      print("Expected value: id1, Actual: ${x[0].id.value}");
       expect(x[0].id.value, "id1");
-      print("Expected value: id2, Actual: ${x[1].id.value}");
       expect(x[1].id.value, "id2");
     });
     test("getLocationsByQuery", () async {
@@ -512,12 +468,9 @@ void main() {
           MPQueryBuilder().build(), MPFilter.builder().build());
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 2, Actual: ${x!.length}");
-      expect(x.length, 2);
+      expect(x!.length, 2);
 
-      print("Expected value: id1, Actual: ${x[0].id.value}");
       expect(x[0].id.value, "id1");
-      print("Expected value: id2, Actual: ${x[1].id.value}");
       expect(x[1].id.value, "id2");
     });
   });
@@ -527,7 +480,6 @@ void main() {
       var x = await platform.checkOfflineDataAvailability();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: false, Actual: $x");
       expect(x, false);
     });
     test("disableEventLogging", () async {
@@ -537,12 +489,9 @@ void main() {
       var x = await platform.getMapStyles();
       expect(x, isNotNull, reason: "Expected value null");
 
-      print("Expected value: 2, Actual: ${x!.length}");
-      expect(x.length, 2);
+      expect(x!.length, 2);
 
-      print("Expected value: name1, Actual: ${x[0].displayName}");
       expect(x[0].displayName, "name1");
-      print("Expected value: name2, Actual: ${x[1].displayName}");
       expect(x[1].displayName, "name2");
     });
     test("reverseGeoCode", () async {
@@ -556,11 +505,8 @@ void main() {
       expect(x.buildings.length, 1);
       expect(x.venues.length, 0);
 
-      print("Expected value: id1, Actual: ${x.areas[0].id.value}");
       expect(x.areas[0].id.value, "id1");
-      print("Expected value: id2, Actual: ${x.areas[1].id.value}");
       expect(x.areas[1].id.value, "id2");
-      print("Expected value: id3, Actual: ${x.buildings[0].id.value}");
       expect(x.buildings[0].id.value, "id3");
     });
   });

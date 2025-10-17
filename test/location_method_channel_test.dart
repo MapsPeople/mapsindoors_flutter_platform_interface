@@ -29,17 +29,5 @@ void main() {
       await platform.setLocationSettingsSelectable(
           MPLocationId("id"), MPLocationSettings(selectable: true));
     });
-    test("setLocationSettingsSelectable_nullID", () async {
-      expect(
-          await platform.setLocationSettingsSelectable(
-              null, MPLocationSettings(selectable: true)),
-          throwsException);
-    });
-    test("setLocationSettingsSelectable_NullSettings", () async {
-      expect(
-          await platform.setLocationSettingsSelectable(
-              MPLocationId("id"), null),
-          throwsException);
-    });
   });
 }

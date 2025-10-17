@@ -142,10 +142,7 @@ class MPLocation extends MPEntity<MPLocationId> {
   List<String>? get aliases => _properties?.aliases;
 
   /// Get a list of [categories] the location is contained in
-  List<String>? get categories {
-    final categoryMap = _properties?.categories?.entries;
-    return categoryMap != null ? List.from(categoryMap) : null;
-  }
+  List<String>? get categories => _properties?.categories?.keys.toList();
 
   /// Get the location's [floorIndex]
   int get floorIndex =>
@@ -187,6 +184,14 @@ class MPLocation extends MPEntity<MPLocationId> {
 
   /// Get the location's settings object
   bool? get selectable => _properties?.locationSettings?.selectable;
+
+  /// Get additional details about the location
+  List<MPAdditionalDetail>? get additionalDetails =>
+      _properties?.additionalDetailsList;
+
+  /// Fetch an additional detail from the location with a [MPDetailType] [type]
+  MPAdditionalDetail? getAdditionalDetailByType(MPDetailType type) =>
+      additionalDetails?.firstWhere((detail) => detail.detailType == type);
 
   /// Set whether the location is selectable
   set selectable(bool? selectable) {

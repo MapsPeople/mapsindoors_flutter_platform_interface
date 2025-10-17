@@ -11,6 +11,9 @@ class MPCategory {
   /// The category's [fields]
   late final Map<String, MPDataField>? fields;
 
+  /// The category's [childKeys]
+  late final List<String>? childKeys;
+
   /// Attempts to build a [MPCategory] from a JSON object, this method will decode the object if needed
   static MPCategory? fromJson(json) => json != null && json != "null"
       ? MPCategory._fromJson(json is String ? jsonDecode(json) : json)
@@ -21,5 +24,6 @@ class MPCategory {
     value = data["value"];
     fields = (data["fields"] as Map<String, dynamic>?)
         ?.map((key, value) => MapEntry(key, MPDataField.fromJson(value)!));
+    childKeys = data["childKeys"] as List<String>?;
   }
 }
