@@ -342,7 +342,7 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   }
 
   @override
-  void addOnCameraEventListner(MPCameraEventListener listener) {
+  void addOnCameraEventListener(MPCameraEventListener listener) {
     if (_cameraEventListeners.isEmpty) {
       listenerChannel
           .invokeMethod("MPL_cameraEventListener", {"setupListener": true});
@@ -376,7 +376,7 @@ class MethodChannelMapControl extends MapcontrolPlatform {
   }
 
   @override
-  void removeOnCameraEventListner(MPCameraEventListener listener) {
+  void removeOnCameraEventListener(MPCameraEventListener listener) {
     _cameraEventListeners.remove(listener);
     if (_cameraEventListeners.isEmpty) {
       listenerChannel
