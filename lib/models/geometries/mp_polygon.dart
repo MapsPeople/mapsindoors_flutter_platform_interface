@@ -24,7 +24,16 @@ class MPPolygon extends MPGeometry {
       coordinates = convertJson3dArray<num>(data);
     } else {
       coordinates = convertJson3dArray<num>(data["coordinates"]);
-      bbox = convertJsonArray<num>(data['bbox']);
+      if (data['bbox'] is Map) {
+        bbox = [
+          data['bbox']["southwest"][0],
+          data['bbox']["southwest"][1],
+          data['bbox']["northeast"][0],
+          data['bbox']["northeast"][1]
+        ];
+      } else if (data['bbox'] != null) {
+        bbox = convertJsonArray<num>(data['bbox']);
+      }
     }
   }
 

@@ -7,6 +7,7 @@ import 'dart:math';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
 
 part 'directionsrenderer_platform_interface.dart';
 part 'directionsservice_platform_interface.dart';

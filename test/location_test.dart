@@ -63,10 +63,27 @@ void main() {
                 "type": "Point"
             },
             "status": 3,
-            "locationSettings": null,
+            "locationSettings": {
+                "selectable": true
+            },
             "displayRule": null,
             "externalId": "1.34.01",
             "description": "description",
+            "activeFrom": 1640995200,
+            "activeTo": 1672531200,
+            "bookable": true,
+            "contact": {
+                "email": {
+                    "text": "Email",
+                    "type": "email",
+                    "value": "contact@eastwtng.com"
+                },
+                "phone": {
+                    "text": "Phone",
+                    "type": "phone",
+                    "value": "+45 12 34 56 78"
+                }
+            },
             "fields": {
                 "capacity": {
                     "text": "Capacity",
@@ -301,6 +318,309 @@ void main() {
           true);
       expect(openingHoursDetail?.openingHours?.standardOpeningHours?.sunday,
           isNull);
+    });
+
+    test("Location geometry and bounds are correct", () {
+      expect(location?.isPoint, false);
+      expect(location?.bounds, isNotNull);
+    });
+
+    test("Location ID properties are correct", () {
+      expect(location?.locationId, "0f3512052d67483e9f7bc13c");
+    });
+
+    test("Location base type is correct", () {
+      expect(location?.baseType, MPLocationType.room);
+    });
+
+    test("Location active time properties work correctly", () {
+      expect(location?.activeFrom, 1640995200);
+      expect(location?.activeTo, 1672531200);
+    });
+
+    test("Location image URL is correct", () {
+      expect(location?.imageUrl, isNull);
+    });
+
+    test("Location restrictions are correct", () {
+      expect(location?.restrictions, isNull);
+    });
+
+    test("Location selectable property works correctly", () {
+      expect(location?.selectable, true);
+    });
+
+    test("Location bookable property is correct", () {
+      expect(location?.isBookable, true);
+    });
+
+    test("Location contact information is correct", () {
+      final emailContact =
+          location?.getProperty(MPLocationPropertyNames.contact);
+      expect(emailContact, isNotNull);
+      expect(emailContact, isA<Map<String, MPDataField>>());
+
+      final contactMap = emailContact as Map<String, MPDataField>?;
+
+      final emailField = contactMap?["email"];
+      expect(emailField, isNotNull);
+      expect(emailField?.text, "Email");
+      expect(emailField?.type, "email");
+      expect(emailField?.value, "contact@eastwtng.com");
+
+      final phoneField = contactMap?["phone"];
+      expect(phoneField, isNotNull);
+      expect(phoneField?.text, "Phone");
+      expect(phoneField?.type, "phone");
+      expect(phoneField?.value, "+45 12 34 56 78");
+    });
+
+    test("Location getProperty method works correctly", () {
+      expect(
+          location?.getProperty(MPLocationPropertyNames.name), "East Wing 2");
+      expect(location?.getProperty(MPLocationPropertyNames.description),
+          "description");
+      expect(
+          location?.getProperty(MPLocationPropertyNames.externalId), "1.34.01");
+      expect(
+          location?.getProperty(MPLocationPropertyNames.type), "MeetingRoom");
+      expect(location?.getProperty(MPLocationPropertyNames.building),
+          "STIGSBORGVEJ");
+      expect(
+          location?.getProperty(MPLocationPropertyNames.venue), "STIGSBORGVEJ");
+      expect(location?.getProperty(MPLocationPropertyNames.floor), 10);
+      expect(location?.getProperty(MPLocationPropertyNames.floorName), "one");
+      expect(location?.getProperty(MPLocationPropertyNames.activeFrom),
+          1640995200);
+      expect(
+          location?.getProperty(MPLocationPropertyNames.activeTo), 1672531200);
+      expect(location?.getProperty(MPLocationPropertyNames.bookable), true);
+      expect(location?.getProperty(MPLocationPropertyNames.contact), isNotNull);
+    });
+
+    test("Location equality works correctly", () {
+      final location1 = MPLocation.fromJson(jsonDecode(locationJsonString));
+      final location2 = MPLocation.fromJson(jsonDecode(locationJsonString));
+
+      expect(location1 == location2, true);
+      expect(location1.hashCode == location2.hashCode, true);
+
+      // Test with different location
+      final differentLocationJson = locationJsonString.replaceAll(
+          '"id": "0f3512052d67483e9f7bc13c"', '"id": "different-location-id"');
+      final differentLocation =
+          MPLocation.fromJson(jsonDecode(differentLocationJson));
+
+      expect(location1 == differentLocation, false);
+      expect(location1.hashCode == differentLocation.hashCode, false);
+    });
+
+    test("Location toJson works correctly", () {
+      final json = location?.toJson();
+      expect(json, isNotNull);
+      expect(json?["id"], "0f3512052d67483e9f7bc13c");
+    });
+  });
+
+  group("LOCATION EDGE CASES", () {
+    test("Location with null/empty data", () {
+      final nullLocation = MPLocation.fromJson(null);
+      expect(nullLocation, isNull);
+
+      final nullStringLocation = MPLocation.fromJson("null");
+      expect(nullStringLocation, isNull);
+    });
+
+    test("Location with minimal data", () {
+      final minimalLocationJson = """{
+        "id": "minimal-location",
+        "type": "Feature",
+        "geometry": {
+          "coordinates": [0, 0],
+          "type": "Point"
+        },
+        "properties": {
+          "name": "minimal"
+        }
+      }""";
+
+      final minimalLocation =
+          MPLocation.fromJson(jsonDecode(minimalLocationJson));
+      expect(minimalLocation, isNotNull);
+      expect(minimalLocation?.name, "minimal");
+      expect(minimalLocation?.aliases, isNull);
+      expect(minimalLocation?.description, isNull);
+      expect(minimalLocation?.categories, isNull);
+      expect(minimalLocation?.externalId, "");
+      expect(minimalLocation?.isBookable, false);
+      expect(minimalLocation?.baseType, MPLocationType.poi); // Default type
+      expect(minimalLocation?.floorIndex,
+          2147483647); // Error code for missing floor
+    });
+
+    test("Location with no additional details", () {
+      final noDetailsJson = locationJsonString.replaceAll(
+          RegExp(r'"additionalDetails":\s*\[[^\]]*\]'),
+          '"additionalDetails": null');
+
+      final locationNoDetails = MPLocation.fromJson(jsonDecode(noDetailsJson));
+      expect(locationNoDetails, isNotNull);
+      expect(locationNoDetails?.additionalDetails, isNull);
+
+      final urlDetail =
+          locationNoDetails?.getAdditionalDetailByType(MPDetailType.url);
+      expect(urlDetail, isNull);
+    });
+
+    test("Location with no geometry", () {
+      final noGeometryJson = locationJsonString.replaceAll(
+          RegExp(r'"geometry":\s*{[^}]*}'), '"geometry": null');
+
+      final locationNoGeometry =
+          MPLocation.fromJson(jsonDecode(noGeometryJson));
+      expect(locationNoGeometry, isNotNull);
+      expect(locationNoGeometry?.isPoint, false);
+      expect(
+          locationNoGeometry?.point, isNotNull); // Should return empty MPPoint
+    });
+
+    test("Location with different geometry types", () {
+      // Test with Point geometry
+      final pointLocationJson = """{
+        "id": "point-location",
+        "type": "Feature",
+        "geometry": {
+          "coordinates": [9.9508382, 57.0581919],
+          "type": "Point"
+        },
+        "properties": {
+          "name": "Point Location",
+          "anchor": {
+            "coordinates": [9.9508382, 57.0581919],
+            "type": "Point"
+          },
+          "floor": "1"
+        }
+      }""";
+
+      final pointLocation = MPLocation.fromJson(jsonDecode(pointLocationJson));
+      expect(pointLocation, isNotNull);
+      expect(pointLocation?.isPoint, true);
+    });
+
+    test("Location with different base types", () {
+      final areaLocationJson = locationJsonString.replaceAll(
+          '"locationType": "room"', '"locationType": "area"');
+      final areaLocation = MPLocation.fromJson(jsonDecode(areaLocationJson));
+      expect(areaLocation?.baseType, MPLocationType.area);
+
+      final venueLocationJson = locationJsonString.replaceAll(
+          '"locationType": "room"', '"locationType": "venue"');
+      final venueLocation = MPLocation.fromJson(jsonDecode(venueLocationJson));
+      expect(venueLocation?.baseType, MPLocationType.venue);
+
+      final buildingLocationJson = locationJsonString.replaceAll(
+          '"locationType": "room"', '"locationType": "building"');
+      final buildingLocation =
+          MPLocation.fromJson(jsonDecode(buildingLocationJson));
+      expect(buildingLocation?.baseType, MPLocationType.building);
+
+      final floorLocationJson = locationJsonString.replaceAll(
+          '"locationType": "room"', '"locationType": "floor"');
+      final floorLocation = MPLocation.fromJson(jsonDecode(floorLocationJson));
+      expect(floorLocation?.baseType, MPLocationType.floor);
+
+      final assetLocationJson = locationJsonString.replaceAll(
+          '"locationType": "room"', '"locationType": "asset"');
+      final assetLocation = MPLocation.fromJson(jsonDecode(assetLocationJson));
+      expect(assetLocation?.baseType, MPLocationType.asset);
+
+      final poiLocationJson = locationJsonString.replaceAll(
+          '"locationType": "room"', '"locationType": "poi"');
+      final poiLocation = MPLocation.fromJson(jsonDecode(poiLocationJson));
+      expect(poiLocation?.baseType, MPLocationType.poi);
+    });
+
+    test("Location with null bookable property", () {
+      final nullBookableLocationJson = locationJsonString.replaceAll(
+          '"bookable": true,', '"bookable": null,');
+
+      final nullBookableLocation =
+          MPLocation.fromJson(jsonDecode(nullBookableLocationJson));
+      expect(nullBookableLocation?.isBookable, false); // Default when null
+    });
+
+    test("Location with null active time properties", () {
+      final nullActiveTimeLocationJson = locationJsonString.replaceAll(
+          '"activeFrom": 1640995200,\n            "activeTo": 1672531200,',
+          '"activeFrom": null,\n            "activeTo": null,');
+
+      final nullActiveTimeLocation =
+          MPLocation.fromJson(jsonDecode(nullActiveTimeLocationJson));
+      expect(nullActiveTimeLocation?.activeFrom, isNull);
+      expect(nullActiveTimeLocation?.activeTo, isNull);
+    });
+
+    test("Location with image URL", () {
+      final imageLocationJson = locationJsonString.replaceAll(
+          '"imageURL": null,', '"imageURL": "https://example.com/image.jpg",');
+
+      final imageLocation = MPLocation.fromJson(jsonDecode(imageLocationJson));
+      expect(imageLocation?.imageUrl, "https://example.com/image.jpg");
+    });
+
+    test("Location with restrictions", () {
+      final restrictionsLocationJson = locationJsonString.replaceAll(
+          '"id": "0f3512052d67483e9f7bc13c",',
+          '"id": "0f3512052d67483e9f7bc13c",\n        "restrictions": ["wheelchair_accessible", "no_smoking"],');
+
+      final restrictionsLocation =
+          MPLocation.fromJson(jsonDecode(restrictionsLocationJson));
+      expect(restrictionsLocation?.restrictions?.length, 2);
+      expect(restrictionsLocation?.restrictions?[0], "wheelchair_accessible");
+      expect(restrictionsLocation?.restrictions?[1], "no_smoking");
+    });
+
+    test("Location with no categories", () {
+      final noCategoriesJson = locationJsonString.replaceAll(
+          RegExp(r'"categories":\s*{[^}]*}'), '"categories": null');
+
+      final locationNoCategories =
+          MPLocation.fromJson(jsonDecode(noCategoriesJson));
+      expect(locationNoCategories, isNotNull);
+      expect(locationNoCategories?.categories, isNull);
+    });
+
+    test("Location with empty categories", () {
+      final emptyCategoriesJson = locationJsonString.replaceAll(
+          RegExp(r'"categories":\s*{[^}]*}'), '"categories": {}');
+
+      final locationEmptyCategories =
+          MPLocation.fromJson(jsonDecode(emptyCategoriesJson));
+      expect(locationEmptyCategories, isNotNull);
+      expect(locationEmptyCategories?.categories, isEmpty);
+    });
+
+    test("Location property getter with all properties", () {
+      final location = MPLocation.fromJson(jsonDecode(locationJsonString));
+
+      // Test all available properties
+      expect(location?.getProperty(MPLocationPropertyNames.aliases),
+          ["name1", "name2"]);
+      expect(location?.getProperty(MPLocationPropertyNames.categories),
+          isA<Map>());
+      expect(location?.getProperty(MPLocationPropertyNames.anchor), isNotNull);
+      expect(location?.getProperty(MPLocationPropertyNames.activeFrom),
+          1640995200);
+      expect(
+          location?.getProperty(MPLocationPropertyNames.activeTo), 1672531200);
+      expect(location?.getProperty(MPLocationPropertyNames.contact), isNotNull);
+      expect(location?.getProperty(MPLocationPropertyNames.fields), isNotNull);
+      expect(location?.getProperty(MPLocationPropertyNames.imageURL), isNull);
+      expect(
+          location?.getProperty(MPLocationPropertyNames.locationType), "room");
+      expect(location?.getProperty(MPLocationPropertyNames.bookable), true);
+      expect(location?.getProperty(MPLocationPropertyNames.roomId), "1.34.01");
     });
   });
 }

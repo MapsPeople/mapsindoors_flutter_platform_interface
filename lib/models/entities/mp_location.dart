@@ -204,7 +204,7 @@ class MPLocation extends MPEntity<MPLocationId> {
 
   /// Gets the location's [MPLocationType] [baseType]
   MPLocationType get baseType {
-    switch (_properties?.type) {
+    switch (_properties?.locationType) {
       case "area":
         return MPLocationType.area;
       case "venue":

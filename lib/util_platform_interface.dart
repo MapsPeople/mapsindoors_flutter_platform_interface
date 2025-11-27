@@ -1,20 +1,20 @@
 part of 'package:mapsindoors_platform_interface/platform_library.dart';
 
 abstract class UtilPlatform extends PlatformInterface {
-  /// Constructs a MapsindoorsPlatform.
+  /// Constructs a UtilPlatform.
   UtilPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
   static UtilPlatform _instance = MethodChannelUtil();
 
-  /// The default instance of [MapsindoorsPlatform] to use.
+  /// The default instance of [UtilPlatform] to use.
   ///
-  /// Defaults to [MethodChannelMapsindoors].
+  /// Defaults to [MethodChannelUtil].
   static UtilPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [MapsindoorsPlatform] when
+  /// platform-specific class that extends [UtilPlatform] when
   /// they register themselves.
   static set instance(UtilPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);

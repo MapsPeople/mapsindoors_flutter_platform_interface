@@ -24,6 +24,6 @@ class MPCategory {
     value = data["value"];
     fields = (data["fields"] as Map<String, dynamic>?)
         ?.map((key, value) => MapEntry(key, MPDataField.fromJson(value)!));
-    childKeys = data["childKeys"] as List<String>?;
+    childKeys = (data["childKeys"] as List<dynamic>?)?.cast<String>();
   }
 }

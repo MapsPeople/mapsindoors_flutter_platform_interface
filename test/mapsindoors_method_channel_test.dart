@@ -4,15 +4,61 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mapsindoors_platform_interface/platform_library.dart';
 
+/// Test suite for [MethodChannelMapsindoors] platform interface implementation.
+///
+/// This test suite validates the functionality of the MapsIndoors platform
+/// methods, including loading/initialization, API key management, language configuration,
+/// positioning, display rules, user roles, entity management, venue synchronization,
+/// and utility functions.
+///
+/// Tests use mock method channels to simulate platform responses and verify
+/// proper argument passing and result handling.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  MethodChannelMapsindoors platform = MethodChannelMapsindoors();
-  const MethodChannel channel = MethodChannel('MapsIndoorsMethodChannel');
-  const MethodChannel listener = MethodChannel('MapsIndoorsListenerChannel');
+
+  late MethodChannelMapsindoors platform;
+  late MockMethodChannel mockMethodChannel;
+
+  // Test data constants
+  const testApiKey = "test_api_key";
+  const testLanguage = "en";
+  const testLocationId = "test_location_id";
+  const testDisplayRuleName = "test_display_rule";
+  const testUserRoleId = "test_user_role";
+  const testVenueId1 = "venue1";
+  const testVenueId2 = "venue2";
+
+  // Reusable test objects
+  final testPoint =
+      MPPoint.withCoordinates(longitude: 9.9501, latitude: 57.0580);
+  final testUserRole =
+      MPUserRole.fromJson({"id": testUserRoleId, "name": "test_role"})!;
+  final testLocationIds = ["eid1", "eid2"];
+  final testVenueIds = [testVenueId1, testVenueId2];
+
+  const MethodChannel mainChannel = MethodChannel('MapsIndoorsMethodChannel');
+  const MethodChannel listenerChannel =
+      MethodChannel('MapsIndoorsListenerChannel');
+
+  // Helper functions
+  void expectMethodCall(String methodName, [Map<String, dynamic>? arguments]) {
+    expect(mockMethodChannel.invokedMethods.last, methodName);
+    if (arguments != null) {
+      expect(mockMethodChannel.lastArguments, arguments);
+    }
+  }
 
   setUp(() {
+    platform = MethodChannelMapsindoors();
+    mockMethodChannel = MockMethodChannel();
+
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(channel, (MethodCall call) async {
+        .setMockMethodCallHandler(mainChannel, (MethodCall call) async {
+      mockMethodChannel.invokedMethods.add(call.method);
+      // Store arguments as-is without casting in setup
+      mockMethodChannel.lastArguments = call.arguments != null
+          ? Map<String, dynamic>.from(call.arguments as Map)
+          : null;
       switch (call.method) {
         case "MIN_initialize":
           return Future(() =>
@@ -153,9 +199,9 @@ void main() {
               ]));
         case "MIN_getLocationById":
           {
-            expect(call.arguments["id"], "id");
+            final id = call.arguments["id"];
             return Future(() => jsonEncode({
-                  "id": "id",
+                  "id": id,
                 }));
           }
         case "MIN_getLocations":
@@ -223,12 +269,64 @@ void main() {
                   "venues": [],
                 }));
           }
+        case "MIN_addVenuesToSync":
+          {
+            expect(call.arguments["venueIds"], isNotNull);
+            final venueIds = jsonDecode(call.arguments["venueIds"]) as List;
+            // Allow empty venue lists for testing
+            if (venueIds.isNotEmpty) {
+              expect(venueIds[0], equals("venue1"));
+              expect(venueIds[1], equals("venue2"));
+            }
+
+            return Future(() => null);
+          }
+        case "MIN_getSyncedVenues":
+          {
+            return Future(() => [
+                  "venue1",
+                  "venue2",
+                ]);
+          }
+        case "MIN_loadWithVenues":
+          {
+            expect(call.arguments["key"], isNotNull);
+            expect(call.arguments["venueIds"], isNotNull);
+            final venueIds = jsonDecode(call.arguments["venueIds"]) as List;
+            // Allow empty venue lists for testing
+            if (venueIds.isNotEmpty) {
+              expect(venueIds[0], equals("venue1"));
+              expect(venueIds[1], equals("venue2"));
+            }
+
+            return Future(() => null);
+          }
+        case "MIN_removeVenuesToSync":
+          {
+            expect(call.arguments["venueIds"], isNotNull);
+            final venueIds = jsonDecode(call.arguments["venueIds"]) as List;
+            // Allow empty venue lists for testing
+            if (venueIds.isNotEmpty) {
+              expect(venueIds[0], equals("venue1"));
+              expect(venueIds[1], equals("venue2"));
+            }
+
+            return Future(() => null);
+          }
+        case "MIN_enableDebugLogging":
+          {
+            expect(call.arguments["enable"], isNotNull);
+
+            return Future(() => null);
+          }
+
+        default:
+          fail('Unexpected method call: ${call.method}');
       }
-      return null;
     });
 
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(listener, (MethodCall call) async {
+        .setMockMethodCallHandler(listenerChannel, (MethodCall call) async {
       switch (call.method) {
         case "MIL_onMapsIndoorsReadyListener":
           {
@@ -236,280 +334,503 @@ void main() {
           }
         case "MIL_onPositionUpdate":
           return Future(() => null);
+        case "MIL_onVenueStatusListener":
+          {
+            expect(call.arguments["addListener"], isNotNull);
+            break;
+          }
+
+        default:
+          fail('Unexpected listener method call: ${call.method}');
       }
       return null;
     });
   });
 
-  group("LOADING", () {
-    test("load", () async {
-      var x = await platform.load("STR");
+  group("Loading and Initialization", () {
+    test("should load MapsIndoors with API key successfully", () async {
+      // Act
+      final result = await platform.load(testApiKey);
 
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.message, "STR");
-      expect(x.code, 120);
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.message, testApiKey);
+      expect(result.code, 120);
+      expectMethodCall("MIN_initialize", {"key": testApiKey});
     });
 
-    test("synchronizeContent", () async {
-      var x = await platform.synchronizeContent();
+    test("should synchronize content successfully", () async {
+      // Act
+      final result = await platform.synchronizeContent();
 
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.message, "SYNCHRONIZE");
-      expect(x.code, 35);
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.message, "SYNCHRONIZE");
+      expect(result.code, 35);
+      expectMethodCall("MIN_synchronizeContent");
     });
 
-    test("isInitialized", () async {
-      var x = await platform.isInitialized();
+    test("should check initialization status correctly", () async {
+      // Act
+      final result = await platform.isInitialized();
 
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!, true);
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, true);
+      expectMethodCall("MIN_isInitialized");
     });
 
-    test("isReady", () async {
-      var x = await platform.isReady();
+    test("should check ready status correctly", () async {
+      // Act
+      final result = await platform.isReady();
 
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!, false);
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, false);
+      expectMethodCall("MIN_isReady");
     });
 
-    test("destroy", () async {
+    test("should destroy MapsIndoors successfully", () async {
+      // Act
       await platform.destroy();
+
+      // Assert
+      expectMethodCall("MIN_destroy");
     });
 
-    test("MapsIndoorsReadyListener", () {
-      OnMapsIndoorsReadyListener x = (error) {};
-      platform.addOnMapsIndoorsReadyListener(x);
+    test("should handle MapsIndoors ready listener lifecycle", () {
+      // Arrange
+      OnMapsIndoorsReadyListener testListener = (error) {};
 
-      platform.removeOnMapsIndoorsReadyListener(x);
-    });
-  });
+      // Act
+      platform.addOnMapsIndoorsReadyListener(testListener);
+      platform.removeOnMapsIndoorsReadyListener(testListener);
 
-  group("API KEY", () {
-    test("getAPIKey", () async {
-      var x = await platform.getAPIKey();
-
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!, "test");
-    });
-
-    test("isAPIKeyValid", () async {
-      var x = await platform.isAPIKeyValid();
-
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!, true);
+      // Assert - Method should complete without error
+      // Listener management is handled internally
     });
   });
 
-  group("LANGUAGE", () {
-    test("getAvailableLanguages", () async {
-      var x = await platform.getAvailableLanguages();
-      expect(x, isNotNull, reason: "Expected value null");
+  group("API Key Management", () {
+    test("should get API key successfully", () async {
+      // Act
+      final result = await platform.getAPIKey();
 
-      expect(x!, ["da", "en"]);
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, "test");
+      expectMethodCall("MIN_getAPIKey");
     });
-    test("getDefaultLanguage", () async {
-      var x = await platform.getDefaultLanguage();
-      expect(x, isNotNull, reason: "Expected value null");
 
-      expect(x!, "da");
-    });
-    test("getLanguage", () async {
-      var x = await platform.getLanguage();
-      expect(x, isNotNull, reason: "Expected value null");
+    test("should validate API key successfully", () async {
+      // Act
+      final result = await platform.isAPIKeyValid();
 
-      expect(x!, "en");
-    });
-    test("setLanguage", () async {
-      var x = await platform.setLanguage("language");
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!, true);
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, true);
+      expectMethodCall("MIN_isAPIKeyValid");
     });
   });
 
-  group("POSITIONING", () {
-    test("onPositionUpdate", () async {
-      platform.onPositionUpdate(MockPositionUpdate());
+  group("Language Configuration", () {
+    test("should get available languages successfully", () async {
+      // Act
+      final result = await platform.getAvailableLanguages();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, ["da", "en"]);
+      expectMethodCall("MIN_getAvailableLanguages");
     });
 
-    test("getSetPositionProvider", () async {
-      var x = platform.getPositionProvider();
+    test("should get default language successfully", () async {
+      // Act
+      final result = await platform.getDefaultLanguage();
 
-      expect(x, isNull);
-
-      var y = MockPositionProvider();
-
-      platform.setPositionProvider(y);
-
-      x = platform.getPositionProvider();
-
-      expect(x!, isNotNull, reason: "Expected value null");
-
-      expect(x, y);
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, "da");
+      expectMethodCall("MIN_getDefaultLanguage");
     });
-  });
 
-  group("DISPLAY RULES", () {
-    test("createDisplayRuleWithName", () async {
-      var x = platform.createDisplayRuleWithName("test");
-      expect(x, isNotNull, reason: "Expected value null");
+    test("should get current language successfully", () async {
+      // Act
+      final result = await platform.getLanguage();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, testLanguage);
+      expectMethodCall("MIN_getLanguage");
     });
-    test("displayRuleNameExists", () async {
-      var x = await platform.displayRuleNameExists("test");
-      expect(x, isNotNull, reason: "Expected value null");
 
-      expect(x, true);
-    });
-    test("locationDisplayRuleExists", () async {
-      var x =
-          await platform.locationDisplayRuleExists(MPLocationId("location"));
-      expect(x, isNotNull, reason: "Expected value null");
+    test("should set language successfully", () async {
+      // Act
+      final result = await platform.setLanguage("language");
 
-      expect(x, true);
-    });
-  });
-
-  group("USERROLES", () {
-    test("applyUserRoles", () async {
-      MPUserRole x = MPUserRole.fromJson({"id": "afaik", "name": "test1"})!;
-      await platform.applyUserRoles([x]);
-    });
-    test("getAppliedUserRoles", () async {
-      var x = await platform.getAppliedUserRoles();
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.length, 1);
-      expect(x[0].id, "123");
-      expect(x[0].name, "userrole");
-    });
-    test("getUserRoles", () async {
-      var x = await platform.getUserRoles();
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.size, 1);
-      expect(x.getAll()[0].id, "123");
-      expect(x.getAll()[0].name, "userrole");
+      // Assert
+      expect(result, isNotNull);
+      expect(result!, true);
+      expectMethodCall("MIN_setLanguage", {"language": "language"});
     });
   });
 
-  group("ENTITIES", () {
-    test("getSolution", () async {
-      var x = await platform.getSolution();
-      expect(x, isNotNull, reason: "Expected value null");
+  group("Positioning", () {
+    test("should handle position updates correctly", () async {
+      // Arrange
+      final mockPosition = MockPositionUpdate();
 
-      expect(x!.id, "solutionId");
+      // Act
+      platform.onPositionUpdate(mockPosition);
+
+      // Assert - Method should complete without error
+      // Position update handling is internal
     });
-    test("getCategories", () async {
-      var x = await platform.getCategories();
-      expect(x, isNotNull, reason: "Expected value null");
 
-      expect(x!.size, 2);
+    test("should manage position provider lifecycle", () async {
+      // Arrange
+      final mockProvider = MockPositionProvider();
 
-      expect(x.getAll()[0].key, "key1");
-      expect(x.getAll()[1].key, "key2");
-    });
-    test("getVenues", () async {
-      var x = await platform.getVenues();
-      expect(x, isNotNull, reason: "Expected value null");
+      // Act
+      var currentProvider = platform.getPositionProvider();
+      expect(currentProvider, isNull);
 
-      expect(x!.size, 1);
+      platform.setPositionProvider(mockProvider);
+      currentProvider = platform.getPositionProvider();
 
-      expect(x.getAll()[0].id.value, "id1");
-      expect(x.getAll()[0].defaultFloor, 0);
-    });
-    test("getDefaultVenue", () async {
-      var x = await platform.getDefaultVenue();
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.id.value, "id1");
-      expect(x.defaultFloor, 0);
-    });
-    test("getBuildings", () async {
-      var x = await platform.getBuildings();
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.size, 1);
-
-      expect(x.getAll()[0].id.value, "id1");
-      expect(x.getAll()[0].venueId, "venue1");
-    });
-    test("getLocationById", () async {
-      var x = await platform.getLocationById("id");
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.id.value, "id");
-    });
-    test("getLocations", () async {
-      var x = await platform.getLocations();
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.length, 2);
-
-      expect(x[0].id.value, "id1");
-      expect(x[1].id.value, "id2");
-    });
-    test("getLocationsByExternalIds", () async {
-      var x = await platform.getLocationsByExternalIds(["eid1", "eid2"]);
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.length, 2);
-
-      expect(x[0].id.value, "id1");
-      expect(x[1].id.value, "id2");
-    });
-    test("getLocationsByQuery", () async {
-      var x = await platform.getLocationsByQuery(
-          MPQueryBuilder().build(), MPFilter.builder().build());
-      expect(x, isNotNull, reason: "Expected value null");
-
-      expect(x!.length, 2);
-
-      expect(x[0].id.value, "id1");
-      expect(x[1].id.value, "id2");
+      // Assert
+      expect(currentProvider, isNotNull);
+      expect(currentProvider, mockProvider);
+      expectMethodCall("MIN_setPositionProvider");
     });
   });
 
-  group("UTILITY", () {
-    test("checkOfflineDataAvailability", () async {
-      var x = await platform.checkOfflineDataAvailability();
-      expect(x, isNotNull, reason: "Expected value null");
+  group("Display Rules", () {
+    test("should create display rule with name successfully", () async {
+      // Act
+      final result = platform.createDisplayRuleWithName(testDisplayRuleName);
 
-      expect(x, false);
+      // Assert
+      expect(result, isNotNull);
+      // Note: No method call expected as this creates a local display rule
     });
-    test("disableEventLogging", () async {
+
+    test("should check if display rule name exists", () async {
+      // Act
+      final result = await platform.displayRuleNameExists(testDisplayRuleName);
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result, true);
+      expectMethodCall(
+          "MIN_displayRuleNameExists", {"name": testDisplayRuleName});
+    });
+
+    test("should check if location display rule exists", () async {
+      // Arrange
+      final locationId = MPLocationId(testLocationId);
+
+      // Act
+      final result = await platform.locationDisplayRuleExists(locationId);
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result, true);
+      expectMethodCall("MIN_locationDisplayRuleExists");
+    });
+  });
+
+  group("User Roles", () {
+    test("should apply user roles successfully", () async {
+      // Arrange
+      final userRole = MPUserRole.fromJson({"id": "afaik", "name": "test1"})!;
+
+      // Act
+      await platform.applyUserRoles([userRole]);
+
+      // Assert
+      expectMethodCall("MIN_applyUserRoles");
+    });
+
+    test("should get applied user roles successfully", () async {
+      // Act
+      final result = await platform.getAppliedUserRoles();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.length, 1);
+      expect(result[0].id, "123");
+      expect(result[0].name, "userrole");
+      expectMethodCall("MIN_getAppliedUserRoles");
+    });
+
+    test("should get user roles successfully", () async {
+      // Act
+      final result = await platform.getUserRoles();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.size, 1);
+      expect(result.getAll()[0].id, "123");
+      expect(result.getAll()[0].name, "userrole");
+      expectMethodCall("MIN_getUserRoles");
+    });
+  });
+
+  group("Entity Management", () {
+    test("should get solution successfully", () async {
+      // Act
+      final result = await platform.getSolution();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.id, "solutionId");
+      expectMethodCall("MIN_getSolution");
+    });
+
+    test("should get categories successfully", () async {
+      // Act
+      final result = await platform.getCategories();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.size, 2);
+      expect(result.getAll()[0].key, "key1");
+      expect(result.getAll()[1].key, "key2");
+      expectMethodCall("MIN_getCategories");
+    });
+
+    test("should get venues successfully", () async {
+      // Act
+      final result = await platform.getVenues();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.size, 1);
+      expect(result.getAll()[0].id.value, "id1");
+      expect(result.getAll()[0].defaultFloor, 0);
+      expectMethodCall("MIN_getVenues");
+    });
+
+    test("should get default venue successfully", () async {
+      // Act
+      final result = await platform.getDefaultVenue();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.id.value, "id1");
+      expect(result.defaultFloor, 0);
+      expectMethodCall("MIN_getDefaultVenue");
+    });
+
+    test("should get buildings successfully", () async {
+      // Act
+      final result = await platform.getBuildings();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.size, 1);
+      expect(result.getAll()[0].id.value, "id1");
+      expect(result.getAll()[0].venueId, testVenueId1);
+      expectMethodCall("MIN_getBuildings");
+    });
+
+    test("should get location by ID successfully", () async {
+      // Act
+      final result = await platform.getLocationById(testLocationId);
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.id.value, testLocationId);
+      expectMethodCall("MIN_getLocationById", {"id": testLocationId});
+    });
+
+    test("should get all locations successfully", () async {
+      // Act
+      final result = await platform.getLocations();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.length, 2);
+      expect(result[0].id.value, "id1");
+      expect(result[1].id.value, "id2");
+      expectMethodCall("MIN_getLocations");
+    });
+
+    test("should get locations by external IDs successfully", () async {
+      // Act
+      final result = await platform.getLocationsByExternalIds(testLocationIds);
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.length, 2);
+      expect(result[0].id.value, "id1");
+      expect(result[1].id.value, "id2");
+      expectMethodCall(
+          "MIN_getLocationsByExternalIds", {"ids": testLocationIds});
+    });
+
+    test("should get locations by query successfully", () async {
+      // Arrange
+      final query = MPQueryBuilder().build();
+      final filter = MPFilter.builder().build();
+
+      // Act
+      final result = await platform.getLocationsByQuery(query, filter);
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.length, 2);
+      expect(result[0].id.value, "id1");
+      expect(result[1].id.value, "id2");
+      expectMethodCall("MIN_getLocationsByQuery");
+    });
+  });
+
+  group("Venue Synchronization", () {
+    test("should add venues to sync successfully", () async {
+      // Act
+      await platform.addVenuesToSync(testVenueIds);
+
+      // Assert
+      expectMethodCall("MIN_addVenuesToSync");
+    });
+
+    test("should get synced venues successfully", () async {
+      // Act
+      final result = await platform.getSyncedVenues();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.length, 2);
+      expect(result[0], testVenueId1);
+      expect(result[1], testVenueId2);
+      expectMethodCall("MIN_getSyncedVenues");
+    });
+
+    test("should load with venues successfully", () async {
+      // Act
+      await platform.loadWithVenues(testApiKey, testVenueIds);
+
+      // Assert
+      expectMethodCall("MIN_loadWithVenues");
+      expect(mockMethodChannel.lastArguments!["key"], testApiKey);
+      expect(mockMethodChannel.lastArguments!["venueIds"], isNotNull);
+    });
+
+    test("should remove venues from sync successfully", () async {
+      // Act
+      await platform.removeVenuesToSync(testVenueIds);
+
+      // Assert
+      expectMethodCall("MIN_removeVenuesToSync");
+    });
+  });
+
+  group("Utility Functions", () {
+    test("should check offline data availability", () async {
+      // Act
+      final result = await platform.checkOfflineDataAvailability();
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result, false);
+      expectMethodCall("MIN_checkOfflineDataAvailability");
+    });
+
+    test("should disable event logging successfully", () async {
+      // Act
       await platform.disableEventLogging(false);
+
+      // Assert
+      expectMethodCall("MIN_disableEventLogging", {"disable": false});
     });
-    test("getMapStyles", () async {
-      var x = await platform.getMapStyles();
-      expect(x, isNotNull, reason: "Expected value null");
 
-      expect(x!.length, 2);
+    test("should get map styles successfully", () async {
+      // Act
+      final result = await platform.getMapStyles();
 
-      expect(x[0].displayName, "name1");
-      expect(x[1].displayName, "name2");
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.length, 2);
+      expect(result[0].displayName, "name1");
+      expect(result[1].displayName, "name2");
+      expectMethodCall("MIN_getMapStyles");
     });
-    test("reverseGeoCode", () async {
-      var x = await platform
-          .reverseGeoCode(MPPoint.withCoordinates(longitude: 69, latitude: 69));
-      expect(x, isNotNull, reason: "Expected value null");
 
-      expect(x!.areas.length, 2);
-      expect(x.rooms.length, 0);
-      expect(x.floors.length, 0);
-      expect(x.buildings.length, 1);
-      expect(x.venues.length, 0);
+    test("should perform reverse geocoding successfully", () async {
+      // Arrange
+      final testGeoPoint = MPPoint.withCoordinates(longitude: 69, latitude: 69);
 
-      expect(x.areas[0].id.value, "id1");
-      expect(x.areas[1].id.value, "id2");
-      expect(x.buildings[0].id.value, "id3");
+      // Act
+      final result = await platform.reverseGeoCode(testGeoPoint);
+
+      // Assert
+      expect(result, isNotNull);
+      expect(result!.areas.length, 2);
+      expect(result.rooms.length, 0);
+      expect(result.floors.length, 0);
+      expect(result.buildings.length, 1);
+      expect(result.venues.length, 0);
+
+      expect(result.areas[0].id.value, "id1");
+      expect(result.areas[1].id.value, "id2");
+      expect(result.buildings[0].id.value, "id3");
+      expectMethodCall("MIN_reverseGeoCode");
+    });
+
+    test("should enable debug logging successfully", () async {
+      // Act
+      await platform.enableDebugLogging(true);
+
+      // Assert
+      expectMethodCall("MIN_enableDebugLogging", {"enable": true});
     });
   });
+
+  group("Edge Cases and Error Handling", () {
+    test("should handle different language codes", () async {
+      const languageCodes = ["da", "en", "de", "fr"];
+
+      for (final code in languageCodes) {
+        await platform.setLanguage(code);
+        expectMethodCall("MIN_setLanguage", {"language": code});
+      }
+    });
+
+    test("should handle empty venue lists", () async {
+      // Act
+      await platform.addVenuesToSync([]);
+
+      // Assert
+      expectMethodCall("MIN_addVenuesToSync");
+    });
+
+    test("should handle various location ID formats", () async {
+      const locationIds = ["loc_123", "building_456", "room_789"];
+
+      for (final id in locationIds) {
+        await platform.getLocationById(id);
+        expectMethodCall("MIN_getLocationById", {"id": id});
+      }
+    });
+
+    test("should handle different logging states", () async {
+      // Test enabling
+      await platform.enableDebugLogging(true);
+      expectMethodCall("MIN_enableDebugLogging", {"enable": true});
+
+      // Test disabling
+      await platform.enableDebugLogging(false);
+      expectMethodCall("MIN_enableDebugLogging", {"enable": false});
+    });
+  });
+}
+
+/// Mock class to track method channel calls for testing
+class MockMethodChannel {
+  final List<String> invokedMethods = [];
+  Map<String, dynamic>? lastArguments;
 }
 
 class MockPositionProvider extends MPPositionProviderInterface {

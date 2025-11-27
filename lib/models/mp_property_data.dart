@@ -32,10 +32,10 @@ class MPPropertyData extends MapsIndoorsObject {
         aliases =
             data["aliases"] != null ? convertJsonArray(data["aliases"]) : null,
         categories = data["categories"] != null
-            ? _convertMap<String>((x) => x.toString(), data["categories"])
+            ? _convertMap<String>((x) => x.toString(), data["categories"] ?? [])
             : null,
         floorIndex =
-            Platform.isIOS ? data["floor"] : int.tryParse(data["floor"]),
+            Platform.isIOS ? data["floor"] : int.tryParse(data["floor"] ?? ""),
         floorName = data["floorName"],
         building = data["building"],
         venue = data["venue"],

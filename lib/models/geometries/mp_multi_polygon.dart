@@ -36,7 +36,7 @@ class MPMultiPolygon extends MPGeometry {
           data['bbox']["northeast"][0],
           data['bbox']["northeast"][1]
         ];
-      } else {
+      } else if (data['bbox'] != null) {
         bbox = convertJsonArray<num>(data['bbox']);
       }
     }

@@ -16,6 +16,19 @@ class MethodChannelMapsindoors extends MapsindoorsPlatform {
 
   MethodChannelMapsindoors() {
     listenerChannel.setMethodCallHandler((call) => _listenerHandler(call));
+    mapsIndoorsMethodChannel.setMethodCallHandler((call) => _handler(call));
+  }
+
+  Future<dynamic> _handler(MethodCall call) async {
+    switch (call.method) {
+      case "getFlutterVersion":
+        {
+          final fileContent = await rootBundle.loadString(
+              "packages/mapsindoors_platform_interface/pubspec.yaml");
+          final pubspec = Pubspec.parse(fileContent);
+          return pubspec.version?.canonicalizedVersion;
+        }
+    }
   }
 
   Future<dynamic> _listenerHandler(MethodCall call) async {
