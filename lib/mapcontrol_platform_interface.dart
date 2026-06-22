@@ -58,8 +58,8 @@ abstract class MapcontrolPlatform extends PlatformInterface {
   Future<void> disableLiveData(String domainType);
   Future<void> setHiddenFeatures(List<MPFeatureType> features);
   Future<List<MPFeatureType>> getHiddenFeatures();
-  void addOnCameraEventListner(MPCameraEventListener listener);
-  void removeOnCameraEventListner(MPCameraEventListener listener);
+  void addOnCameraEventListener(MPCameraEventListener listener);
+  void removeOnCameraEventListener(MPCameraEventListener listener);
   void addOnFloorUpdateListener(OnFloorUpdateListener listener);
   void removeOnFloorUpdateListener(OnFloorUpdateListener listener);
   void setOnCurrentBuildingChangedListener(

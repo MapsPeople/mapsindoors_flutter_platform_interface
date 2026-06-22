@@ -18,7 +18,7 @@ class MPDisplayRule implements DynamicObject<MPDisplayRuleId> {
   MPDisplayRuleId get id => _id;
 
   /// The name of the display rule
-  String get dispalyRuleName => _id.value;
+  String get displayRuleName => _id.value;
 
   /// Get the general visibility value
   Future<bool?> isVisible() => DisplayRulePlatform.instance.isVisible(id);
